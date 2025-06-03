@@ -13,7 +13,7 @@ function MqttHandler.new(device, printer_ip, printer_port, client_id, username, 
   local self = setmetatable({}, MqttHandler)
   self.device = device
   self.printer_ip = printer_ip
-  self.printer_port = printer_port or 1883
+  self.printer_port = printer_port or 8883
   self.client_id = client_id or ("st-hub-" .. device.id)
   self.username = username
   self.password = password
