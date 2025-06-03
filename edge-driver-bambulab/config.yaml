@@ -1,1 +1,9 @@
-nada
+name: 'BambuLab MQTT Printer'
+version: '0.1.1' # Versão incrementada
+description: 'Driver Edge para impressoras Bambu Lab via MQTT com suporte a CA Cert'
+author: 'Seu Nome'
+permissions:
+  lan: # Permissão para acesso à rede local
+    description: "Necessário para conectar à impressora via MQTT"
+  discovery: # Permissão para descoberta de dispositivos (opcional)
+    description: "Permite descobrir a impressora na rede"
