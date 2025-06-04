@@ -1,0 +1,17 @@
+# fingerprints.yml
+# Este ficheiro é usado para a descoberta automática de dispositivos.
+# Para a configuração manual inicial da impressora Bambu Lab (via IP),
+# não são necessárias fingerprints aqui.
+
+# Exemplo de como poderia ser se houvesse descoberta SSDP (Simple Service Discovery Protocol):
+# ssdp:
+#  - manufacturer: "Bambu Lab"
+#    modelName: "X1 Carbon" # Ou outro identificador específico do modelo
+#    # Outros campos SSDP que ajudariam a identificar unicamente a impressora
+
+# Exemplo para mDNS/Bonjour:
+# mdns:
+#  - serviceType: "_mqtt._tcp.local." # Exemplo, o tipo de serviço real pode variar
+#    properties:
+#      - key: "model"
+#        value: "BambuX1C"
