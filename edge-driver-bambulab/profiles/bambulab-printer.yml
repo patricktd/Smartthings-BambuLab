@@ -1,22 +1,25 @@
 # profiles/bambulab-printer.yml
-name: bambulab.printer.profile.v2 # Nome atualizado
+name: bambulab.printer.profile.v3
 components:
   - id: main
     capabilities:
-      - id: switch # Para ligar/desligar ou iniciar/parar impressão (conceptual)
+      - id: switch
         version: 1
-      - id: temperatureMeasurement # Para temperatura do bico ou mesa
+      - id: refresh
         version: 1
-      - id: refresh # Para solicitar atualização de estado
+      - id: healthCheck
         version: 1
-      - id: healthCheck # Para indicar o estado da conexão (online/offline)
+      # Capabilities Personalizadas:
+      - id: bambuPrinterJobStatus.v1
         version: 1
-      # Adicione outras capabilities relevantes, como:
-      # - threeAxis (para progresso X,Y,Z)
-      # - execution (para estado da impressão: imprimindo, pausa, completo)
-      # - Se criar capabilities personalizadas, liste-as aqui e defina-as na pasta /capabilities
+      - id: patchprepare64330.bedTemperature # Não precisa de .v1 aqui se o ID no ficheiro da capability não o tiver
+        version: 1
+      - id: patchprepare64330.nozzleTemperature
+        version: 1
+      - id: patchprepare64330.printProgress
+        version: 1
     categories:
-      - name: Switch # Categoria válida. "Other" também é uma opção.
+      - name: Switch # Ou Other
 preferences:
   - name: "ipAddress"
     title: "Endereço IP da Impressora"

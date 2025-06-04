@@ -1,0 +1,59 @@
+# capabilities/bambuPrinterJobStatus.v1.yml
+id: bambuPrinterJobStatus.v1
+version: 1
+name: Bambu Printer Job Status
+status: proposed
+attributes:
+  jobPhase:
+    schema:
+      type: "object"
+      properties:
+        value:
+          type: "string"
+          # Valores possíveis: IDLE, CALIBRATING, PREPARING, PRINTING, PAUSED, FINISHING, COMPLETED, ERROR, OFFLINE
+      enumCommands: []
+    setter: "setJobPhase"
+  currentLayer:
+    schema:
+      type: "object"
+      properties:
+        value:
+          type: "integer"
+          minimum: 0
+      enumCommands: []
+  totalLayers:
+    schema:
+      type: "object"
+      properties:
+        value:
+          type: "integer"
+          minimum: 0
+      enumCommands: []
+  remainingTime: # Tempo restante em minutos
+    schema:
+      type: "object"
+      properties:
+        value:
+          type: "integer"
+          minimum: 0
+        unit:
+          type: "string"
+          enum:
+            - "min"
+          default: "min"
+      enumCommands: []
+  hmsMessages: # Mensagens do Health Management System
+    schema:
+      type: "object"
+      properties:
+        value:
+          type: "string" # Poderia ser um JSON stringificado se forem muitas mensagens
+      enumCommands: []
+commands:
+  setJobPhase:
+    name: "setJobPhase"
+    arguments:
+      - name: "phase"
+        optional: false
+        schema:
+          type: "string"

@@ -1,0 +1,19 @@
+# capabilities/patchprepare64330.bedTemperature.v1.yml
+id: patchprepare64330.bedTemperature
+version: 1
+status: proposed
+name: Bed Temperature
+attributes:
+  temperature:
+    schema:
+      type: object
+      properties:
+        value:
+          type: number
+        unit:
+          type: string
+          enum:
+            - C
+            - F
+      additionalProperties: false
+commands: {}
