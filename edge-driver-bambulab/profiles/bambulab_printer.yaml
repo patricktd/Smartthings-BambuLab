@@ -2,40 +2,64 @@ name: bambulab.printer.v1
 components:
   - id: main
     capabilities:
+      # Adicione aqui as capabilities relevantes para sua impressora
+      # Exemplo:
       - id: switch
+        version: 1
+      - id: temperatureMeasurement 
+        version: 1
+      - id: threeAxis # Se quiser exibir informações de progresso, etc.
         version: 1
       - id: refresh
         version: 1
       - id: healthCheck
         version: 1
-
+    categories:
+      - name: Printer3D
 preferences:
   - name: "ipAddress"
-    title: "Printer IP Address"
-    description: "Enter the local IP address of your Bambu Lab printer."
+    title: "Endereço IP da Impressora"
+    description: "Digite o endereço IP local da sua impressora Bambu Lab."
     required: true
     definition:
       type: "string"
-      default: ""
+      default: "" # Usuário deve preencher
+  - name: "port"
+    title: "Porta MQTT"
+    description: "Porta para conexão MQTT (padrão 8883 para Bambu Lab)."
+    required: true
+    definition:
+      type: "integer"
+      default: 8883
+      minimum: 1
+      maximum: 65535
   - name: "username"
-    title: "MQTT Username"
-    description: "Enter the MQTT username."
+    title: "Usuário MQTT"
+    description: "Nome de usuário para a conexão MQTT."
     required: true
     definition:
       type: "string"
-      default: "bblp"
-  - name: "accessToken" # Ou password, conforme a necessidade
-    title: "Access Code / Password"
-    description: "Enter the MQTT Access Code from your printer."
+      default: "bblp" # Padrão "bblp", mas editável
+  - name: "accessToken"
+    title: "Senha / Access Code MQTT"
+    description: "A senha ou 'Access Code' fornecido pela impressora para MQTT."
     required: true
     definition:
       type: "string"
+      stringType: "password" # Para mascarar a entrada
       default: ""
   - name: "caCertificate"
-    title: "CA Certificate"
-    description: "Paste the content of the CA certificate provided by Bambu Lab."
-    required: true
+    title: "Certificado CA (PEM Format)"
+    description: "Cole o conteúdo completo do certificado CA fornecido pela Bambu Lab. Deve começar com '-----BEGIN CERTIFICATE-----'."
+    required: true # Essencial para conexão segura na porta 8883
     definition:
       type: "string"
-      stringType: "paragraph" # Permite múltiplas linhas
+      stringType: "paragraph" # Permite entrada de múltiplas linhas
+      default: ""
+  - name: "mqttClientId"
+    title: "MQTT Client ID (Opcional)"
+    description: "ID de cliente MQTT a ser usado. Deixe em branco para usar o ID do dispositivo SmartThings."
+    required: false
+    definition:
+      type: "string"
       default: ""
