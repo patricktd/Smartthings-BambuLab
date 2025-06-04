@@ -1,7 +1,0 @@
-# config.yml
-name: BambuLab-MQTT-Driver-v2 # Nome atualizado para esta versão
-version: 0.1.0
-description: Driver Edge para impressoras 3D Bambu Lab via MQTT
-permissions:
-  lan: {} # Necessário para comunicação na rede local
-  discovery: {} # Se for implementar descoberta SSDP/mDNS no futuro
