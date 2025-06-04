@@ -1,67 +1,101 @@
-name: bambulab.printer.v1 # Mantenha o mesmo nome se for uma evolução do perfil
+name: bambulab.printer.v1
 components:
   - id: main
     label: Impressora Bambu Lab
     capabilities:
-      # Capacidades padrão
+      # Capacidades básicas
       - id: switch
-        version: 1
-      - id: temperatureMeasurement # Para temperatura do bico
         version: 1
       - id: refresh
         version: 1
       - id: healthCheck
         version: 1
-      # Capacidades customizadas (exemplos)
+      
+      # Monitoramento de temperatura
+      - id: temperatureMeasurement
+        version: 1
+        attributes:
+          - name: "nozzle"
+            label: "Bico"
+            unit: "°C"
+          - name: "bed"
+            label: "Mesa"
+            unit: "°C"
+      
+      # Capacidades customizadas otimizadas
       - id: patchprepare64330.printerStatus
         version: 1
+        values: ["ready", "printing", "paused", "error"]
+      
       - id: patchprepare64330.printProgress
         version: 1
-      - id: patchprepare64330.nozzleTemperature
+        unit: "%"
+        range: [0, 100]
+      
+      - id: patchprepare64330.filamentType
         version: 1
-      - id: patchprepare64330.bedTemperature
-        version: 1
+        schema:
+          type: "string"
+
     categories:
       - name: Printer
-preferences: # Adicionando preferências do dispositivo
+
+preferences:
   - name: "printerIp"
-    title: "IP da Impressora"
-    description: "O endereço IP da sua impressora Bambu Lab."
+    title: "Endereço IP"
+    description: "IP local da impressora (ex: 192.168.1.150)"
     required: true
     preferenceType: string
     definition:
-      stringType: "text"
-      default: "192.168.1.100"
+      stringType: "ip"  # Especifica que é um campo de IP
+      default: ""
+
   - name: "printerPort"
     title: "Porta MQTT"
-    description: "A porta MQTT da impressora (ex: 1883 ou 8883 para TLS)."
+    description: "Padrão: 8883 (TLS) para BambuLab"
     required: true
     preferenceType: integer
     definition:
       minimum: 1
       maximum: 65535
       default: 8883
+
   - name: "mqttUsername"
-    title: "Usuário MQTT Padrão bblp"
-    description: "Nome de usuário para autenticação MQTT"
+    title: "Usuário MQTT"
+    description: "Padrão: bblp (não altere)"
     required: true
     preferenceType: string
     definition:
       stringType: "text"
-      default: "" # <<< Adicione esta linha
+      default: "bblp"
+      readOnly: true  # Impede alteração pelo usuário
+
   - name: "mqttPassword"
-    title: "Senha MQTT - usar o Token"
-    description: "Senha para autenticação MQTT"
+    title: "Código de Acesso"
+    description: "Encontrado no menu da impressora > Configurações > Rede"
     required: true
     preferenceType: string
     definition:
-      stringType: "password" # Oculta os caracteres
-      default: "" # <<< Adicione esta linha
+      stringType: "password"
+      default: ""
+      minLength: 8  # Tamanho mínimo típico dos códigos BambuLab
+
+  - name: "connectionSecurity"
+    title: "Segurança da Conexão"
+    description: "Recomendado: TLS (8883)"
+    required: true
+    preferenceType: enum
+    definition:
+      options:
+        - "TLS (recomendado)"
+        - "Sem criptografia"
+      default: "TLS (recomendado)"
+
   - name: "caCertificate"
-    title: "Certificado CA"
-    description: "Cole o conteúdo do certificado CA (formato PEM) se a conexão MQTT usar TLS com um CA customizado."
-    required: true
+    title: "Certificado CA (Opcional)"
+    description: "Necessário apenas se usar certificado autoassinado"
+    required: false  # Alterado para opcional
     preferenceType: string
     definition:
-      stringType: "paragraph" # Permite texto longo
-      default: "" # <<< Adicione esta linha também, já que é required e string
+      stringType: "paragraph"
+      default: ""
