@@ -4,56 +4,56 @@ version: 1
 name: Bambu Printer Job Status
 status: proposed
 attributes:
-  jobPhase:
-    schema:
+  jobPhase: # 2 espaços de indentação
+    schema: # 4 espaços de indentação
       type: "object"
-      properties:
-        value:
+      properties: # 6 espaços de indentação
+        value: # 8 espaços de indentação
           type: "string"
-          # Valores possíveis: IDLE, CALIBRATING, PREPARING, PRINTING, PAUSED, FINISHING, COMPLETED, ERROR, OFFLINE
-      enumCommands: []
-    setter: "setJobPhase"
-  currentLayer:
-    schema:
+      # Valores possíveis: IDLE, CALIBRATING, PREPARING, PRINTING, PAUSED, FINISHING, COMPLETED, ERROR, OFFLINE
+      enumCommands: [] # 6 espaços de indentação (alinhado com properties)
+    setter: "setJobPhase" # 4 espaços de indentação (alinhado com schema)
+  currentLayer: # 2 espaços
+    schema: # 4 espaços
       type: "object"
-      properties:
-        value:
+      properties: # 6 espaços
+        value: # 8 espaços
           type: "integer"
           minimum: 0
-      enumCommands: []
-  totalLayers:
-    schema:
+      enumCommands: [] # 6 espaços
+  totalLayers: # 2 espaços
+    schema: # 4 espaços
       type: "object"
-      properties:
-        value:
+      properties: # 6 espaços
+        value: # 8 espaços
           type: "integer"
           minimum: 0
-      enumCommands: []
-  remainingTime: # Tempo restante em minutos
-    schema:
+      enumCommands: [] # 6 espaços
+  remainingTime: # 2 espaços
+    schema: # 4 espaços
       type: "object"
-      properties:
-        value:
+      properties: # 6 espaços
+        value: # 8 espaços
           type: "integer"
           minimum: 0
-        unit:
+        unit: # 8 espaços
           type: "string"
           enum:
             - "min"
           default: "min"
-      enumCommands: []
-  hmsMessages: # Mensagens do Health Management System
-    schema:
+      enumCommands: [] # 6 espaços
+  hmsMessages: # 2 espaços
+    schema: # 4 espaços
       type: "object"
-      properties:
-        value:
-          type: "string" # Poderia ser um JSON stringificado se forem muitas mensagens
-      enumCommands: []
+      properties: # 6 espaços
+        value: # 8 espaços
+          type: "string"
+      enumCommands: [] # 6 espaços
 commands:
-  setJobPhase:
-    name: "setJobPhase"
-    arguments:
-      - name: "phase"
+  setJobPhase: # 2 espaços
+    name: "setJobPhase" # 4 espaços
+    arguments: # 4 espaços
+      - name: "phase" # 6 espaços (o hífen conta como parte da indentação da lista)
         optional: false
-        schema:
+        schema: # 8 espaços
           type: "string"
