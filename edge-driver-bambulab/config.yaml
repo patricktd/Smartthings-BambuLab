@@ -1,7 +1,8 @@
 name: 'BambuLab MQTT Printer'
-version: '0.1.1' # Versão incrementada
+packageKey: 'pattetech.bambulab.driver' # <<<<< VOCÊ PRECISA ADICIONAR ESTA LINHA E MUDAR PARA ALGO ÚNICO
+version: '0.0.1' # Versão incrementada
 description: 'Driver Edge para impressoras Bambu Lab via MQTT com suporte a CA Cert'
-author: 'Seu Nome'
+author: 'Patrick Teixeira'
 permissions:
   lan: # Permissão para acesso à rede local
     description: "Necessário para conectar à impressora via MQTT"
