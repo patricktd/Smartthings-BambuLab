@@ -21,7 +21,7 @@ preferences:
       stringType: "ip"  # Tipo específico para IP
       default: ""
 
-   - name: "mqttPassword"
+  - name: "mqttPassword"
     title: "Código de Acesso"
     description: "Código físico da impressora"
     required: true
