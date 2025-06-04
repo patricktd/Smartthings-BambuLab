@@ -13,13 +13,13 @@ components:
       - id: healthCheck
         version: 1
       # Capacidades customizadas (exemplos)
-      - id: namespace.printerStatus
+      - id: patchprepare64330.printerStatus
         version: 1
-      - id: namespace.printProgress
+      - id: patchprepare64330.printProgress
         version: 1
-      - id: namespace.nozzleTemperature
+      - id: patchprepare64330.nozzleTemperature
         version: 1
-      - id: namespace.bedTemperature
+      - id: patchprepare64330.bedTemperature
         version: 1
     categories:
       - name: Printer
@@ -48,6 +48,7 @@ preferences: # Adicionando preferências do dispositivo
     preferenceType: string
     definition:
       stringType: "text"
+      default: "" # <<< Adicione esta linha
   - name: "mqttPassword"
     title: "Senha MQTT - usar o Token"
     description: "Senha para autenticação MQTT"
@@ -55,6 +56,7 @@ preferences: # Adicionando preferências do dispositivo
     preferenceType: string
     definition:
       stringType: "password" # Oculta os caracteres
+      default: "" # <<< Adicione esta linha
   - name: "caCertificate"
     title: "Certificado CA"
     description: "Cole o conteúdo do certificado CA (formato PEM) se a conexão MQTT usar TLS com um CA customizado."
@@ -62,3 +64,4 @@ preferences: # Adicionando preferências do dispositivo
     preferenceType: string
     definition:
       stringType: "paragraph" # Permite texto longo
+      default: "" # <<< Adicione esta linha também, já que é required e string
