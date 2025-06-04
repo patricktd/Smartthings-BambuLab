@@ -18,7 +18,6 @@ preferences:
     required: true
     preferenceType: string
     definition:
-      stringType: "ip"  # Tipo específico para IP
       default: ""
 
   - name: "mqttPassword"
@@ -27,6 +26,5 @@ preferences:
     required: true
     preferenceType: string
     definition:
-      stringType: "password"
       default: ""
       minLength: 8
