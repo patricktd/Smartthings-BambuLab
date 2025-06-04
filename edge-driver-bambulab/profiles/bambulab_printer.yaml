@@ -10,18 +10,32 @@ components:
         version: 1
 
 preferences:
-  - name: "printerIp"
-    title: "IP da Impressora"
+  - name: "ipAddress"
+    title: "Printer IP Address"
+    description: "Enter the local IP address of your Bambu Lab printer."
     required: true
-    preferenceType: string
     definition:
-      stringType: "ip"
+      type: "string"
       default: ""
-
-  - name: "mqttPassword"
-    title: "Código de Acesso"
+  - name: "username"
+    title: "MQTT Username"
+    description: "Enter the MQTT username."
     required: true
-    preferenceType: string
     definition:
-      stringType: "password"
+      type: "string"
+      default: "bblp"
+  - name: "accessToken" # Ou password, conforme a necessidade
+    title: "Access Code / Password"
+    description: "Enter the MQTT Access Code from your printer."
+    required: true
+    definition:
+      type: "string"
+      default: ""
+  - name: "caCertificate"
+    title: "CA Certificate"
+    description: "Paste the content of the CA certificate provided by Bambu Lab."
+    required: true
+    definition:
+      type: "string"
+      stringType: "paragraph" # Permite múltiplas linhas
       default: ""
