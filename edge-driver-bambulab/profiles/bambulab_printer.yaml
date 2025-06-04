@@ -15,7 +15,7 @@ components:
         version: 1
     # CORREÇÃO APLICADA AQUI:
     categories:
-      - name: Other # Categoria genérica válida
+      - name: Switch # Categoria genérica válida
 preferences:
   - name: "ipAddress"
     title: "Endereço IP da Impressora"
@@ -23,7 +23,6 @@ preferences:
     required: true
     definition:
       type: "string"
-      default: "" # Usuário deve preencher
   - name: "port"
     title: "Porta MQTT"
     description: "Porta para conexão MQTT (padrão 8883 para Bambu Lab)."
@@ -47,7 +46,6 @@ preferences:
     definition:
       type: "string"
       stringType: "password" # Para mascarar a entrada
-      default: ""
   - name: "caCertificate"
     title: "Certificado CA (Formato PEM)"
     description: "Cole o conteúdo completo do certificado CA fornecido pela Bambu Lab. Deve começar com '-----BEGIN CERTIFICATE-----'."
@@ -55,18 +53,15 @@ preferences:
     definition:
       type: "string"
       stringType: "paragraph" # Permite entrada de múltiplas linhas
-      default: ""
   - name: "mqttSerial"
     title: "Número de Série da Impressora (para Tópicos MQTT)"
     description: "O número de série da impressora, usado para construir os tópicos MQTT (ex: 01P09C4B0301136)."
     required: true
     definition:
       type: "string"
-      default: ""
   - name: "mqttClientId"
     title: "MQTT Client ID (Opcional)"
     description: "ID de cliente MQTT a ser usado. Deixe em branco para usar o ID do dispositivo SmartThings."
     required: false
     definition:
       type: "string"
-      default: ""
