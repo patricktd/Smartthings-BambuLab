@@ -18,7 +18,28 @@ preferences:
     required: true
     preferenceType: string
     definition:
+      stringType: "ip"
       default: ""
+
+  - name: "printerPort"
+    title: "Porta MQTT"
+    description: "Padrão: 8883 (TLS)"
+    required: true
+    preferenceType: integer
+    definition:
+      minimum: 1
+      maximum: 65535
+      default: 8883
+
+  - name: "mqttUsername"
+    title: "Usuário MQTT"
+    description: "Padrão: bblp"
+    required: true
+    preferenceType: string
+    definition:
+      stringType: "text"  # ← CORREÇÃO ADICIONADA
+      default: "bblp"
+      readOnly: true
 
   - name: "mqttPassword"
     title: "Código de Acesso"
@@ -26,5 +47,14 @@ preferences:
     required: true
     preferenceType: string
     definition:
+      stringType: "password"
       default: ""
-      minLength: 8
+
+  - name: "caCertificate"
+    title: "Certificado CA"
+    description: "Certificado TLS (opcional)"
+    required: false  # ← Alterado para opcional
+    preferenceType: string
+    definition:
+      stringType: "textarea"  # ← CORREÇÃO ADICIONADA
+      default: ""
