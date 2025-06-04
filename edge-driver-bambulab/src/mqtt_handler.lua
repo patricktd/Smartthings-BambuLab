@@ -1,113 +1,133 @@
--- Supondo que você tenha uma biblioteca MQTT como 'luamqtt' ou similar
--- e que ela suporte configuração TLS.
--- A biblioteca cosock.socket.tls é geralmente disponível no ambiente Edge.
+-- src/init.lua
 
-local tls = require("cosock.socket.tls") -- Ou socket.tls dependendo do ambiente
-local mqtt_library = require("mqtt_library") -- SUBSTITUA pela sua biblioteca MQTT real
-local log = require("log")
+local driver_template = require "st.driver"
+local log = require "log"
+local MqttHandler = require "mqtt_handler" -- O nosso módulo MQTT
+local utils = require "st.utils" -- Para deep_compare e stringify_table
 
-local MqttClient = {}
-MqttClient.__index = MqttClient
-
-function MqttClient.new(device, config)
-    local self = setmetatable({}, MqttClient)
-    self.device = device
-    self.config = config -- ipAddress, port, username, accessToken, caCertificate, mqttSerial, mqttClientId
-    self.client = nil
-    self.connected = false
-    self.base_topic = string.format("device/%s/", self.config.mqttSerial)
-    return self
-end
-
-function MqttClient:connect()
-    if self.client and self.connected then
-        log.info("MQTT: Já conectado.")
-        return true
-    end
-
-    log.info(string.format("MQTT: Tentando conectar ao broker: %s:%d", self.config.ipAddress, self.config.port))
-
-    -- Configuração TLS
-    -- A forma exata de passar o certificado CA como string depende da sua biblioteca MQTT
-    -- e da implementação TLS subjacente (cosock.socket.tls).
-    -- É crucial que o caCertificate seja uma string contendo o certificado PEM.
-
-    -- IMPORTANTE: A opção 'verify' no TLS.
-    -- Seu teste com `mosquitto_sub --insecure` sugere que a validação completa do peer pode falhar.
-    -- `verify = "none"` é menos seguro, mas pode ser necessário se o certificado da impressora for autoassinado
-    -- ou não corresponder perfeitamente ao IP/hostname.
-    -- Idealmente, `verify = "peer"` funcionaria.
-    local tls_params = {
-        mode = "client",
-        protocol = "tlsv1_2", -- Ou a versão apropriada (ex: "tlsv1_3")
-        ca_data = self.config.caCertificate, -- CONCEITUAL - VERIFIQUE A API DA SUA LIB MQTT/TLS
-                                             -- Algumas libs podem usar `ca_pem` ou um método para carregar o CA.
-        verify = "none", -- TENTE "peer" PRIMEIRO, mas "none" pode ser necessário (equivale ao --insecure)
-        options = {"all", "no_ticket"} -- Ajuste conforme necessário
+-- Função para obter a configuração do dispositivo a partir das preferências
+local function get_device_config(device)
+    local prefs = device.preferences
+    -- Validação básica para garantir que as preferências existem
+    return {
+        ipAddress = prefs.ipAddress or "",
+        port = prefs.port or 8883,
+        username = prefs.username or "bblp",
+        accessToken = prefs.accessToken or "",
+        caCertificate = prefs.caCertificate or "",
+        mqttSerial = prefs.mqttSerial or "",
+        mqttClientId = prefs.mqttClientId or device.id -- Usa o ID do dispositivo se não especificado
     }
-
-    local client_id = self.config.mqttClientId or self.device.id
-
-    -- Crie uma instância do cliente MQTT. A sintaxe varia conforme a biblioteca.
-    -- Exemplo conceitual (VERIFIQUE A DOCUMENTAÇÃO DA SUA BIBLIOTECA MQTT):
-    -- self.client = mqtt_library.client.create()
-    -- self.client:set_server(self.config.ipAddress, self.config.port)
-    -- self.client:set_credentials(self.config.username, self.config.accessToken)
-    -- self.client:set_client_id(client_id)
-
-    -- A configuração TLS é o ponto mais crítico:
-    -- self.client:set_tls_config({
-    --    ca_pem_data = self.config.caCertificate,
-    --    verify_peer = false -- ou true se 'verify = "peer"'
-    -- })
-    -- OU
-    -- self.client:set_tls_context(tls_params) -- Se a lib aceitar um contexto TLS completo
-
-    log.warn("MQTT: LÓGICA DE CONEXÃO MQTT E TLS PRECISA SER IMPLEMENTADA COM SUA BIBLIOTECA ESPECÍFICA")
-    log.warn(string.format("MQTT: Usando Certificado CA: %s...", string.sub(self.config.caCertificate or "", 1, 50)))
-    log.warn(string.format("MQTT: Tópico base: %s", self.base_topic))
-
-    -- Simulação para fins de exemplo, substitua pela lógica real:
-    if self.config.ipAddress and self.config.caCertificate and self.config.caCertificate:find("BEGIN CERTIFICATE") and self.config.mqttSerial ~= "" then
-         log.info("MQTT: Configurações parecem OK, simularia conexão bem-sucedida para desenvolvimento.")
-         self.device:online() -- Marcar dispositivo como online
-         self.connected = true
-         -- self:subscribe_to_topics() -- Chamar após conexão
-         return true
-    else
-        log.error("MQTT: Configurações incompletas ou CA/Serial inválido para simulação.")
-        self.device:offline() -- Marcar dispositivo como offline
-        self.connected = false
-        return false
-    end
 end
 
--- function MqttClient:subscribe_to_topics()
---     if not self.connected or not self.client then return end
---     local report_topic = self.base_topic .. "report"
---     log.info(string.format("MQTT: Inscrevendo-se em: %s", report_topic))
---     -- self.client:subscribe(report_topic, {qos = 0}) -- Adapte à sua lib
--- end
-
-function MqttClient:disconnect()
-    if self.client and self.connected then
-        log.info("MQTT: Desconectando...")
-        -- self.client:disconnect() -- Método real da sua biblioteca
-        self.connected = false
-    end
-    self.device:offline()
+-- Função para validar se a configuração essencial está presente
+local function validate_config(config)
+    if not config.ipAddress or config.ipAddress == "" then return false, "Endereço IP não configurado" end
+    if not config.accessToken or config.accessToken == "" then return false, "Access Token não configurado" end
+    if not config.caCertificate or not config.caCertificate:find("BEGIN CERTIFICATE") then return false, "Certificado CA inválido ou não configurado" end
+    if not config.mqttSerial or config.mqttSerial == "" then return false, "Número de Série MQTT não configurado" end
+    return true
 end
 
--- Adicione métodos para publicar mensagens, etc.
--- Exemplo:
--- function MqttClient:publish_message(sub_topic, message, retain)
---     if not self.connected or not self.client then
---         log.error("MQTT: Não conectado, impossível publicar.")
---         return
---     end
---     local full_topic = self.base_topic .. sub_topic
---     log.info(string.format("MQTT: Publicando em %s: %s", full_topic, message))
---     -- self.client:publish(full_topic, message, {qos = 0, retain = retain or false})
--- end
+-- Definição do driver
+local driver = driver_template.Driver("BambuLabMQTT_Fresh_v2", { -- Nome do driver atualizado
+    lifecycle_handlers = {
+        init = function(self, device)
+            log.info(string.format("[%s] Driver: Handler 'init' chamado", device.label or device.id))
+            device:set_field("healthState", "UNKNOWN", {visibility = {display = true, ui = true}})
+            -- Guarda a configuração inicial para comparação em infoChanged
+            device:set_field("current_config_checksum", utils.stringify_table(get_device_config(device)))
+        end,
+        added = function(self, device)
+            log.info(string.format("[%s] Driver: Handler 'added' chamado", device.label or device.id))
+            local config = get_device_config(device)
+            local is_valid, err_msg = validate_config(config)
 
-return MqttClient
+            if not is_valid then
+                log.warn(string.format("[%s] Driver: Configuração inicial incompleta ou inválida: %s. Aguardando preferências.", device.label or device.id, err_msg))
+                device:offline()
+                return
+            end
+            
+            device.mqtt_client = MqttHandler.new(device, config)
+            device.mqtt_client:connect() -- A conexão deve lidar com o estado online/offline
+            device:set_field("current_config_checksum", utils.stringify_table(config))
+        end,
+        infoChanged = function(self, device, event, ...)
+            log.info(string.format("[%s] Driver: Handler 'infoChanged' chamado", device.label or device.id))
+            local new_config = get_device_config(device)
+            local old_config_checksum = device:get_field("current_config_checksum")
+            local new_config_checksum = utils.stringify_table(new_config)
+
+            if old_config_checksum == new_config_checksum then
+                log.info(string.format("[%s] Driver: Configuração não alterada, ignorando.", device.label or device.id))
+                return
+            end
+            log.info(string.format("[%s] Driver: Configuração alterada. Tentando reconectar...", device.label or device.id))
+
+            if device.mqtt_client then
+                device.mqtt_client:disconnect()
+            end
+
+            local is_valid, err_msg = validate_config(new_config)
+            if not is_valid then
+                log.warn(string.format("[%s] Driver: Configuração atualizada está incompleta ou inválida: %s.", device.label or device.id, err_msg))
+                device:offline()
+                return
+            end
+
+            device.mqtt_client = MqttHandler.new(device, new_config)
+            device.mqtt_client:connect()
+            device:set_field("current_config_checksum", new_config_checksum)
+        end,
+        removed = function(self, device)
+            log.info(string.format("[%s] Driver: Handler 'removed' chamado", device.label or device.id))
+            if device.mqtt_client then
+                device.mqtt_client:disconnect()
+            end
+        end
+        -- Outros handlers como 'doConfigure' podem ser adicionados se necessário
+    },
+    capability_handlers = {
+        refresh = {
+            REFRESH = function(self, device, cmd)
+                log.info(string.format("[%s] Driver: Comando Refresh recebido", device.label or device.id))
+                if device.mqtt_client and device.mqtt_client:is_connected() then
+                    log.info(string.format("[%s] Driver: Solicitando atualização de estado da impressora via MQTT.", device.label or device.id))
+                    device.mqtt_client:request_status_update() -- Implementar esta função no mqtt_handler
+                else
+                    log.warn(string.format("[%s] Driver: Não é possível atualizar, MQTT não conectado.", device.label or device.id))
+                    device:offline()
+                end
+                device:emit_event(cmd.capability.REFRESHED({})) -- Confirma que o refresh foi processado
+            end
+        },
+        switch = {
+            ON = function(self, device, cmd)
+                log.info(string.format("[%s] Driver: Comando Switch ON recebido", device.label or device.id))
+                if device.mqtt_client and device.mqtt_client:is_connected() then
+                    -- Lógica para enviar comando ON via MQTT (ex: iniciar impressão)
+                    -- device.mqtt_client:publish_command("print/start", "{}")
+                    log.info(string.format("[%s] Driver: (Simulado) Enviando comando ON via MQTT.", device.label or device.id))
+                    device:emit_event(cmd.capability.switch.on())
+                else
+                    log.warn(string.format("[%s] Driver: MQTT não conectado, comando ON ignorado.", device.label or device.id))
+                end
+            end,
+            OFF = function(self, device, cmd)
+                log.info(string.format("[%s] Driver: Comando Switch OFF recebido", device.label or device.id))
+                if device.mqtt_client and device.mqtt_client:is_connected() then
+                    -- Lógica para enviar comando OFF via MQTT (ex: parar impressão)
+                    -- device.mqtt_client:publish_command("print/stop", "{}")
+                    log.info(string.format("[%s] Driver: (Simulado) Enviando comando OFF via MQTT.", device.label or device.id))
+                    device:emit_event(cmd.capability.switch.off())
+                else
+                    log.warn(string.format("[%s] Driver: MQTT não conectado, comando OFF ignorado.", device.label or device.id))
+                end
+            end
+        }
+        -- Adicione handlers para outras capabilities aqui
+    }
+})
+
+driver:run()
