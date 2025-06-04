@@ -1,0 +1,22 @@
+{
+  "id": "patchprepare64330.printProgress",
+  "version": 1,
+  "status": "proposed",
+  "name": "Print Progress",
+  "attributes": {
+    "progress": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "commands": {}
+}

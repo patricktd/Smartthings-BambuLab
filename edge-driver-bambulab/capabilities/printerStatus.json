@@ -1,0 +1,35 @@
+{
+  "id": "patchprepare64330.printerStatus",
+  "version": 1,
+  "status": "proposed",
+  "name": "Printer Status",
+  "attributes": {
+    "status": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "maxLength": 50
+          }
+        },
+        "additionalProperties": false
+      },
+      "setter": "setStatus",
+      "enumCommands": []
+    }
+  },
+  "commands": {
+    "setStatus": {
+      "arguments": [
+        {
+          "name": "status",
+          "schema": {
+            "type": "string",
+            "maxLength": 50
+          }
+        }
+      ]
+    }
+  }
+}
