@@ -1,101 +1,32 @@
 name: bambulab.printer.v1
 components:
   - id: main
-    label: Impressora Bambu Lab
     capabilities:
-      # Capacidades básicas
       - id: switch
         version: 1
       - id: refresh
         version: 1
       - id: healthCheck
         version: 1
-      
-      # Monitoramento de temperatura
       - id: temperatureMeasurement
         version: 1
-        attributes:
-          - name: "nozzle"
-            label: "Bico"
-            unit: "°C"
-          - name: "bed"
-            label: "Mesa"
-            unit: "°C"
-      
-      # Capacidades customizadas otimizadas
-      - id: patchprepare64330.printerStatus
-        version: 1
-        values: ["ready", "printing", "paused", "error"]
-      
-      - id: patchprepare64330.printProgress
-        version: 1
-        unit: "%"
-        range: [0, 100]
-      
-      - id: patchprepare64330.filamentType
-        version: 1
-        schema:
-          type: "string"
-
-    categories:
-      - name: Printer
 
 preferences:
   - name: "printerIp"
-    title: "Endereço IP"
-    description: "IP local da impressora (ex: 192.168.1.150)"
+    title: "IP da Impressora"
+    description: "Endereço IP local da impressora"
     required: true
     preferenceType: string
     definition:
-      stringType: "ip"  # Especifica que é um campo de IP
+      stringType: "ip"  # Tipo específico para IP
       default: ""
 
-  - name: "printerPort"
-    title: "Porta MQTT"
-    description: "Padrão: 8883 (TLS) para BambuLab"
-    required: true
-    preferenceType: integer
-    definition:
-      minimum: 1
-      maximum: 65535
-      default: 8883
-
-  - name: "mqttUsername"
-    title: "Usuário MQTT"
-    description: "Padrão: bblp (não altere)"
-    required: true
-    preferenceType: string
-    definition:
-      stringType: "text"
-      default: "bblp"
-      readOnly: true  # Impede alteração pelo usuário
-
-  - name: "mqttPassword"
+   - name: "mqttPassword"
     title: "Código de Acesso"
-    description: "Encontrado no menu da impressora > Configurações > Rede"
+    description: "Código físico da impressora"
     required: true
     preferenceType: string
     definition:
       stringType: "password"
       default: ""
-      minLength: 8  # Tamanho mínimo típico dos códigos BambuLab
-
-  - name: "connectionSecurity"
-    title: "Segurança da Conexão"
-    description: "Recomendado: TLS (8883)"
-    required: true
-    preferenceType: enum
-    definition:
-      options:
-        - "TLS (recomendado)"
-        - "Sem criptografia"
-      default: "TLS (recomendado)"
-
-  - name: "caCertificate"
-    title: "Certificado CA (Opcional)"
-    description: "Necessário apenas se usar certificado autoassinado"
-    required: false  # Alterado para opcional
-    preferenceType: string
-    definition:
-      stringType: "paragraph"
-      default: ""
+      minLength: 8
