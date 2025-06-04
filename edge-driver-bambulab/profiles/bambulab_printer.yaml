@@ -44,21 +44,21 @@ preferences: # Adicionando preferências do dispositivo
   - name: "mqttUsername"
     title: "Usuário MQTT Padrão bblp"
     description: "Nome de usuário para autenticação MQTT"
-    required: false
+    required: true
     preferenceType: string
     definition:
       stringType: "text"
   - name: "mqttPassword"
     title: "Senha MQTT - usar o Token"
     description: "Senha para autenticação MQTT"
-    required: false
+    required: true
     preferenceType: string
     definition:
       stringType: "password" # Oculta os caracteres
   - name: "caCertificate"
-    title: "Certificado CA (Opcional)"
+    title: "Certificado CA"
     description: "Cole o conteúdo do certificado CA (formato PEM) se a conexão MQTT usar TLS com um CA customizado."
-    required: false
+    required: true
     preferenceType: string
     definition:
       stringType: "paragraph" # Permite texto longo
