@@ -1,21 +1,22 @@
-name: bambulab.printer.v1 # Adapte o nome conforme sua estrutura
+# profiles/bambulab-printer.yml
+name: bambulab.printer.profile.v2 # Nome atualizado
 components:
   - id: main
     capabilities:
-      # Adicione aqui as capabilities relevantes para sua impressora
-      # Exemplo:
-      - id: switch
+      - id: switch # Para ligar/desligar ou iniciar/parar impressão (conceptual)
         version: 1
       - id: temperatureMeasurement # Para temperatura do bico ou mesa
         version: 1
-      # Considere outras capabilities como progressReferenceTime, execution, etc.
-      - id: refresh
+      - id: refresh # Para solicitar atualização de estado
         version: 1
-      - id: healthCheck
+      - id: healthCheck # Para indicar o estado da conexão (online/offline)
         version: 1
-    # CORREÇÃO APLICADA AQUI:
+      # Adicione outras capabilities relevantes, como:
+      # - threeAxis (para progresso X,Y,Z)
+      # - execution (para estado da impressão: imprimindo, pausa, completo)
+      # - Se criar capabilities personalizadas, liste-as aqui e defina-as na pasta /capabilities
     categories:
-      - name: Switch # Categoria genérica válida (ou Other, se Switch não resolver)
+      - name: Switch # Categoria válida. "Other" também é uma opção.
 preferences:
   - name: "ipAddress"
     title: "Endereço IP da Impressora"
@@ -23,7 +24,7 @@ preferences:
     required: true
     definition:
       type: "string"
-      default: "" # Usuário deve preencher
+      default: ""
   - name: "port"
     title: "Porta MQTT"
     description: "Porta para conexão MQTT (padrão 8883 para Bambu Lab)."
@@ -34,31 +35,31 @@ preferences:
       minimum: 1
       maximum: 65535
   - name: "username"
-    title: "Usuário MQTT"
-    description: "Nome de usuário para a conexão MQTT."
+    title: "Utilizador MQTT"
+    description: "Nome de utilizador para a conexão MQTT."
     required: true
     definition:
       type: "string"
-      default: "bblp" # Padrão "bblp", mas editável
+      default: "bblp"
   - name: "accessToken"
     title: "Senha / Access Code MQTT"
     description: "A senha ou 'Access Code' fornecido pela impressora para MQTT."
     required: true
     definition:
       type: "string"
-      stringType: "password" # Para mascarar a entrada
+      stringType: "password"
       default: ""
   - name: "caCertificate"
     title: "Certificado CA (Formato PEM)"
-    description: "Cole o conteúdo completo do certificado CA fornecido pela Bambu Lab. Deve começar com '-----BEGIN CERTIFICATE-----'."
-    required: true # Essencial para conexão segura na porta 8883
+    description: "Cole o conteúdo completo do certificado CA. Deve começar com '-----BEGIN CERTIFICATE-----'."
+    required: true
     definition:
       type: "string"
-      stringType: "paragraph" # Permite entrada de múltiplas linhas
+      stringType: "paragraph"
       default: ""
   - name: "mqttSerial"
-    title: "Número de Série da Impressora (para Tópicos MQTT)"
-    description: "O número de série da impressora, usado para construir os tópicos MQTT (ex: 01P09C4B0301136)."
+    title: "Número de Série da Impressora (para Tópicos)"
+    description: "O número de série da impressora, usado para construir os tópicos MQTT (ex: N4P00P000000000)."
     required: true
     definition:
       type: "string"
