@@ -1,4 +1,4 @@
-name: bambulab.printer.v1
+name: bambulab.printer.v1 # Adapte o nome conforme sua estrutura
 components:
   - id: main
     capabilities:
@@ -6,16 +6,16 @@ components:
       # Exemplo:
       - id: switch
         version: 1
-      - id: temperatureMeasurement 
+      - id: temperatureMeasurement # Para temperatura do bico ou mesa
         version: 1
-      - id: threeAxis # Se quiser exibir informações de progresso, etc.
-        version: 1
+      # Considere outras capabilities como progressReferenceTime, execution, etc.
       - id: refresh
         version: 1
       - id: healthCheck
         version: 1
+    # CORREÇÃO APLICADA AQUI:
     categories:
-      - name: Printer3D
+      - name: Other # Categoria genérica válida
 preferences:
   - name: "ipAddress"
     title: "Endereço IP da Impressora"
@@ -49,12 +49,19 @@ preferences:
       stringType: "password" # Para mascarar a entrada
       default: ""
   - name: "caCertificate"
-    title: "Certificado CA (PEM Format)"
+    title: "Certificado CA (Formato PEM)"
     description: "Cole o conteúdo completo do certificado CA fornecido pela Bambu Lab. Deve começar com '-----BEGIN CERTIFICATE-----'."
     required: true # Essencial para conexão segura na porta 8883
     definition:
       type: "string"
       stringType: "paragraph" # Permite entrada de múltiplas linhas
+      default: ""
+  - name: "mqttSerial"
+    title: "Número de Série da Impressora (para Tópicos MQTT)"
+    description: "O número de série da impressora, usado para construir os tópicos MQTT (ex: 01P09C4B0301136)."
+    required: true
+    definition:
+      type: "string"
       default: ""
   - name: "mqttClientId"
     title: "MQTT Client ID (Opcional)"
