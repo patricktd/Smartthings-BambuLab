@@ -1,0 +1,8 @@
+name: 'BambuLab MQTT Printer (Temperature)'
+packageKey: 'pattetech.bambulab.driver' # <<<<< VOCÊ PRECISA ADICIONAR ESTA LINHA E MUDAR PARA 
+version: '0.2.0'
+description: 'Driver Edge para temperaturas da Bambu Lab via MQTT'
+author: 'Seu Nome'
+permissions:
+  lan:
+    description: "Necessário para conectar à impressora via MQTT"
