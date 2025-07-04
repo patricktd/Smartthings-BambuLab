@@ -3,14 +3,10 @@ components:
   - id: main
     label: Bambu Lab Printer
     capabilities:
-      - id: execution
-        version: 1
-      - id: progressMeter
-        version: 1
       - id: refresh
         version: 1
     categories:
-      - name: 3DPrinter
+      - name: SmartPlug
   - id: hotend
     label: Hotend
     capabilities:

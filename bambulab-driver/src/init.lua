@@ -2,32 +2,83 @@ local Driver = require('st.driver')
 local log = require('st.log')
 local capabilities = require('st.capabilities')
 
-local BambuLabPrinter = {
-  driver_template_name = 'bambulab-driver',
+-- Definimos uma variável para o nosso driver
+local BambuLabPrinterDriver = {}
 
-  -- Esta função é chamada quando um dispositivo é adicionado ao SmartThings
-  device_added = function(self, driver, device)
-    log.info('Dispositivo Bambu Lab (simplificado) adicionado! ID: ' .. device.id)
-    
-    -- Emitir valores iniciais para as capabilities
-    
-    -- Componente Principal ('main')
-    device:emit_event(capabilities.execution.execution.ready()) -- Estado, começa como 'pronto'
-    device:emit_event(capabilities.progressMeter.progress(0)) -- Barra de progresso, começa em 0%
-    
-    -- Componente Hotend
-    device:emit_component_event(
-      device.profile.components.hotend,
-      capabilities.temperatureMeasurement.temperature({ value = 0, unit = 'C' })
-    )
-    
-    -- Componente Bed (Mesa)
-    device:emit_component_event(
-      device.profile.components.bed,
-      capabilities.temperatureMeasurement.temperature({ value = 0, unit = 'C' })
-    )
-  end
+-- Esta tabela define o perfil da nossa impressora. O driver a usará para criar o dispositivo.
+local bambu_printer_profile = {
+  name = 'bambulab-printer',
+  components = {
+    main = {
+      id = 'main',
+      capabilities = {
+        { id = 'pattetech.printStatus', version = 1 },
+        { id = 'pattetech.printProgress', version = 1 },
+        { id = 'refresh', version = 1 }
+      }
+    },
+    hotend = {
+      id = 'hotend',
+      label = 'Hotend',
+      capabilities = {
+        { id = 'temperatureMeasurement', version = 1 }
+      }
+    },
+    bed = {
+      id = 'bed',
+      label = 'Bed',
+      capabilities = {
+        { id = 'temperatureMeasurement', version = 1 }
+      }
+    }
+  }
 }
 
-local driver = Driver('BambuLabPrinterDriver', BambuLabPrinter)
+-- Função que é chamada quando o botão do "Instalador" é acionado
+function create_printer_handler(driver, device, command)
+  log.info('Comando para criar a impressora recebido!')
+
+  -- Usamos o perfil que definimos acima para criar o dispositivo da impressora
+  driver:try_create_device(bambu_printer_profile)
+
+  log.info('Tentativa de criação do dispositivo da impressora enviada.')
+  -- Opcional: Desligar o botão após o uso para que ele possa ser usado novamente
+  device:emit_event(capabilities.switch.switch.off())
+end
+
+-- Função chamada quando um dispositivo é adicionado
+function BambuLabPrinterDriver.device_added(driver, device)
+  log.info('Dispositivo adicionado. Perfil: ' .. device.profile.name)
+  -- Lógica para quando o dispositivo da IMPRESSORA é adicionado
+  if device.profile.name == 'bambulab-printer' then
+    log.info('Dispositivo Bambu Lab (criado) adicionado! ID: ' .. device.id)
+    -- Emitir os valores iniciais para o dispositivo da impressora
+    device:emit_event({ component = 'main', capability = 'pattetech.printStatus', attribute = 'status', value = 'Pronto'})
+    device:emit_event({ component = 'main', capability = 'pattetech.printProgress', attribute = 'progress', value = 0})
+    device:emit_component_event(device.profile.components.hotend, { capability = 'temperatureMeasurement', attribute = 'temperature', value = 0, unit = 'C' })
+    device:emit_component_event(device.profile.components.bed, { capability = 'temperatureMeasurement', attribute = 'temperature', value = 0, unit = 'C' })
+  end
+end
+
+-- Esta função é chamada quando o "Instalador" é criado pela primeira vez
+function BambuLabPrinterDriver.init(driver)
+  log.info('Driver Bambu Lab inicializado. Criando o dispositivo Instalador se necessário.')
+  -- Criamos o dispositivo "Instalador" automaticamente na primeira vez que o driver roda
+  driver:try_create_device({
+    profile = 'bambulab-creator.v1',
+    label = 'Bambu Lab Creator'
+  })
+end
+
+
+-- Aqui definimos que a função 'create_printer_handler' deve ser chamada
+-- quando o comando 'on' do 'switch' for recebido.
+BambuLabPrinterDriver.capability_handlers = {
+  [capabilities.switch.ID] = {
+    [capabilities.switch.commands.on.NAME] = create_printer_handler
+  }
+}
+
+-- Cria a instância do driver e o executa
+local driver = Driver('Bambu Lab Printer Driver', BambuLabPrinterDriver)
 driver:run()

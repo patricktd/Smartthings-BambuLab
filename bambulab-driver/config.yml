@@ -1,0 +1,18 @@
+# Suas informações de name, packageKey, etc. continuam aqui...
+name: 'Bambu Lab Printer Driver'
+packageKey: 'pattetech.bambulab.driver'
+version: '0.0.2' # Incrementei a versão para refletir a mudança
+description: 'Driver Edge para impressoras Bambu Lab via MQTT com suporte a CA Cert'
+author: 'Patrick Teixeira'
+
+# Adicione a seção de profiles abaixo das suas permissões
+permissions:
+  lan:
+    description: "Necessário para conectar à impressora via MQTT"
+  discovery:
+    description: "Permite descobrir a impressora na rede"
+
+# Seção de perfis
+profiles:
+  - name: bambulab-printer
+  - name: bambulab-creator.v1
