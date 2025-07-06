@@ -1,8 +1,12 @@
-name: bambulab-printer
+name: bambulab-printer-manual
 components:
   - id: main
     label: Bambu Lab Printer
     capabilities:
+      - id: contactSensor # Para Status
+        version: 1
+      - id: switchLevel   # Para Progresso
+        version: 1
       - id: refresh
         version: 1
     categories:
@@ -21,3 +25,12 @@ components:
         version: 1
     categories:
       - name: Thermostat
+preferences:
+  - name: "printerIp"
+    title: "Printer IP Address"
+    description: "O endereço IP da sua impressora."
+    required: true
+    preferenceType: string
+    definition:
+      stringType: text
+      default: ""
