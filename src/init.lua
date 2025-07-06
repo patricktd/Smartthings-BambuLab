@@ -83,18 +83,6 @@ end
 -- main functions
 -----------------------------------------------------------------
 
--- log to the console if the verbose log setting is switced on
-function console_log(device, message, log_level)
-
-	if(device.preferences.verboseLog == true) then
-
-		if(log_level == nil) then log_level = 'debug' end
-		log.log({}, log_level, message)
-
-	end
-	
-end
-
 -----------------------------------------------------------------
 -- smartthings functions
 -----------------------------------------------------------------
