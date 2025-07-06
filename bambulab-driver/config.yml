@@ -1,5 +1,5 @@
-name: 'Bambu Lab Driver Funcional'
-packageKey: 'pattetech.bambulab'
+name: 'Bambu Lab Driver'
+packageKey: 'bambulab.smarthings'
 version: '0.0.1'
 author: 'Patrick Teixeira'
 description: 'Driver para impressoras Bambu Lab'
