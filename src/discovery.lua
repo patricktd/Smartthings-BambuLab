@@ -1,7 +1,6 @@
 local log = require "log"
-local socket = require "socket"
--- Usamos dns.query_mdns para a descoberta
-local dns = socket.dns
+-- CORREÇÃO: Importa a biblioteca de mDNS diretamente
+local dns = require "st.socket.dns"
 local discovery = {}
 
 --- Tenta analisar o registro TXT de uma resposta mDNS.
