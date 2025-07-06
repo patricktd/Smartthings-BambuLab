@@ -1,6 +1,6 @@
 local log = require "log"
--- CORREÇÃO: Importa a biblioteca de mDNS diretamente
-local dns = require "st.socket.dns"
+local mdns = require "st.mdns"
+
 local discovery = {}
 
 --- Tenta analisar o registro TXT de uma resposta mDNS.
@@ -22,18 +22,15 @@ local function parse_txt_record(txt_record)
   return result
 end
 
-
 function discovery.handle_discovery(driver, _should_continue)
   log.info("Iniciando descoberta de impressoras Bambu Lab via mDNS...")
 
-  -- Define a função de callback para quando um dispositivo é encontrado
+  -- Função chamada sempre que um dispositivo é encontrado
   local function on_found(device_info)
-    -- device_info contém os dados do dispositivo descoberto (ip, porta, nome, etc.)
     log.info(string.format("Dispositivo Bambu Lab encontrado: %s", device_info.name))
     log.pretty_print(device_info)
 
-    -- O número de série é geralmente a primeira parte do nome do serviço
-    -- Ex: "00M00A000000000._bambulab-tool._tcp.local"
+    -- O número de série é geralmente a primeira parte do nome
     local serial_number = string.match(device_info.name, "^[^.]+")
     if not serial_number then
       log.error("Não foi possível extrair o número de série do nome do dispositivo: " .. device_info.name)
@@ -41,38 +38,35 @@ function discovery.handle_discovery(driver, _should_continue)
     end
     log.info(string.format("Número de série extraído: %s", serial_number))
 
-    -- Analisa o registro TXT para obter mais informações, como o modelo
+    -- Analisa o registro TXT para obter mais informações
     local txt_data = parse_txt_record(device_info.txt)
-    local model = txt_data.dev_product or "Bambu Lab Printer" -- Usa o nome do produto se disponível
+    local model = txt_data.dev_product or "Bambu Lab Printer"
 
-    -- Monta os metadados para criar o dispositivo no SmartThings
+    -- Monta os metadados
     local metadata = {
       type = "LAN",
-      -- Este é o ponto CRÍTICO: usamos um ID único!
       device_network_id = serial_number,
       label = string.format("Bambu Lab %s", model),
       profile = "bambulab.v1",
       manufacturer = "Bambu Lab",
       model = model,
-      -- Precisamos salvar o IP e a porta para o driver usar depois
       ip_address = device_info.ip,
       port = device_info.port
     }
 
     log.info(string.format("Tentando criar dispositivo para a impressora %s", serial_number))
     log.pretty_print(metadata)
-    
-    -- Tenta criar o dispositivo. Se já existir com esse ID, não faz nada.
+
     driver:try_create_device(metadata)
   end
 
-  -- Define a função de callback para quando a busca terminar
+  -- Função chamada ao término da descoberta
   local function on_done()
     log.info("Descoberta de impressoras Bambu Lab finalizada.")
   end
 
-  -- Inicia a busca mDNS pelo serviço da Bambu Lab
-  dns.query_mdns("_bambulab-tool._tcp.local", on_found, on_done)
+  -- Inicia descoberta mDNS com o módulo correto
+  mdns.discover("_bambulab-tool._tcp.local", on_found, on_done)
 end
 
 return discovery
