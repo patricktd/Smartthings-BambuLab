@@ -1,72 +1,65 @@
+local cosock = require "cosock"
+local json = require "dkjson"
 local log = require "log"
-local mdns = require "st.mdns"
 
 local discovery = {}
 
---- Tenta analisar o registro TXT de uma resposta mDNS.
--- O registro TXT da Bambu Lab é uma string como "dev_name=Bambu Lab X1 Carbon;dev_ip=192.168.1.100;..."
--- @param txt_record A string do registro TXT.
--- @return Uma tabela com os pares chave-valor.
-local function parse_txt_record(txt_record)
-  local result = {}
-  if txt_record == nil then
-    return result
-  end
-
-  for part in string.gmatch(txt_record, "([^;]+)") do
-    local key, value = string.match(part, "([^=]+)=(.*)")
-    if key and value then
-      result[key] = value
-    end
-  end
-  return result
-end
-
 function discovery.handle_discovery(driver, _should_continue)
-  log.info("Iniciando descoberta de impressoras Bambu Lab via mDNS...")
+  log.info("Iniciando descoberta LAN por UDP broadcast (whois)...")
 
-  -- Função chamada sempre que um dispositivo é encontrado
-  local function on_found(device_info)
-    log.info(string.format("Dispositivo Bambu Lab encontrado: %s", device_info.name))
-    log.pretty_print(device_info)
+  local udp = cosock.socket.udp()
+  udp:setsockname("0.0.0.0", 0)
+  udp:setoption("broadcast", true)
+  udp:settimeout(2)
 
-    -- O número de série é geralmente a primeira parte do nome
-    local serial_number = string.match(device_info.name, "^[^.]+")
-    if not serial_number then
-      log.error("Não foi possível extrair o número de série do nome do dispositivo: " .. device_info.name)
-      return
+  -- Payload de descoberta
+  local payload = "whois"
+
+  -- Envia broadcast
+  udp:sendto(payload, "255.255.255.255", 19099)
+
+  -- Escuta respostas
+  local start_time = os.time()
+  while os.difftime(os.time(), start_time) < 2 do
+    local data, ip, port = udp:receivefrom()
+    if data then
+      log.info(string.format("Resposta UDP de %s:%d", ip, port))
+      log.debug("Payload bruto: " .. data)
+
+      -- Tenta parsear JSON
+      local info, pos, err = json.decode(data, 1, nil)
+      if info then
+        log.pretty_print(info)
+
+        -- Extrai informações
+        local serial = info.serial or "unknown"
+        local product = info.product or "Bambu Lab"
+        local fw = info.fw_ver or "unknown"
+        local ip_addr = info.network and info.network.ip or ip
+        local mac = info.network and info.network.mac or "unknown"
+
+        -- Cria metadata do device
+        local metadata = {
+          type = "LAN",
+          device_network_id = serial,
+          label = string.format("Bambu Lab %s (%s)", product, serial),
+          profile = "bambulab.v1",
+          manufacturer = "Bambu Lab",
+          model = product,
+          vendor_provided_label = product,
+          ip_address = ip_addr,
+          port = 80
+        }
+
+        log.info("Criando device...")
+        driver:try_create_device(metadata)
+      else
+        log.warn("Falha ao decodificar JSON: " .. (err or ""))
+      end
     end
-    log.info(string.format("Número de série extraído: %s", serial_number))
-
-    -- Analisa o registro TXT para obter mais informações
-    local txt_data = parse_txt_record(device_info.txt)
-    local model = txt_data.dev_product or "Bambu Lab Printer"
-
-    -- Monta os metadados
-    local metadata = {
-      type = "LAN",
-      device_network_id = serial_number,
-      label = string.format("Bambu Lab %s", model),
-      profile = "bambulab.v1",
-      manufacturer = "Bambu Lab",
-      model = model,
-      ip_address = device_info.ip,
-      port = device_info.port
-    }
-
-    log.info(string.format("Tentando criar dispositivo para a impressora %s", serial_number))
-    log.pretty_print(metadata)
-
-    driver:try_create_device(metadata)
   end
 
-  -- Função chamada ao término da descoberta
-  local function on_done()
-    log.info("Descoberta de impressoras Bambu Lab finalizada.")
-  end
-
-  -- Inicia descoberta mDNS com o módulo correto
-  mdns.discover("_bambulab-tool._tcp.local", on_found, on_done)
+  log.info("Descoberta UDP finalizada.")
 end
 
 return discovery
