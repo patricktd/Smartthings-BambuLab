@@ -1,9 +1,8 @@
 name: 'Bambu Lab Driver Funcional'
-packageKey: 'pattetech.bambulab.final.v2' # Chave final para um começo limpo
-version: '1.0.0'
+packageKey: 'pattetech.bambulab'
+version: '0.0.1'
 author: 'Patrick Teixeira'
-description: 'Driver para Bambu Lab com configuração manual'
+description: 'Driver para impressoras Bambu Lab'
 permissions:
   lan: {}
-profiles:
-  - name: bambulab-printer-manual
+  discovery: {}
