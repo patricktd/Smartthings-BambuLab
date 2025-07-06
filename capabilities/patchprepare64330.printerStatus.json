@@ -1,13 +1,24 @@
 {
   "id": "patchprepare64330.printerStatus",
-  "version": 1,
-  "status": "proposed",
-  "attributes": {
-    "jobStatus": {
-      "schema": {
-        "type": "string",
-        "enum": ["idle", "printing", "paused", "completed", "error"]
-      }
-    }
-  }
+    "version": 1,
+    "status": "proposed",
+    "name": "klipperstatus",
+    "ephemeral": false,
+    "attributes": {
+        "printer": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
 }
