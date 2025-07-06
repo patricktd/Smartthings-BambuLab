@@ -2,7 +2,7 @@ name: bambulab-printer.v1
 components:
   - id: main
     capabilities:
-      - id: pattetech.status
+      - id: patchprepare64330.printerStatus.status
       - id: healthCheck
     categories:
       - name: Generic
