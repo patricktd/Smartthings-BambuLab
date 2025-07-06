@@ -16,7 +16,7 @@ function discovery.handle_discovery(driver, _should_continue)
   local payload = "whois"
 
   -- Envia broadcast
-  udp:sendto(payload, "255.255.255.255", 19099)
+  udp:sendto(payload, "255.255.255.255", 2021)
 
   -- Escuta respostas
   local start_time = os.time()
