@@ -1,8 +1,8 @@
 name: bambulab-printer.v1
 components:
-- id: main
-  label: Klipper
-  capabilities:
-  - id: pattetech.status
-    version: 1
-  - name: Printer
+  - id: main
+    capabilities:
+      - id: pattetech.status
+      - id: healthCheck
+    categories:
+      - name: Generic
