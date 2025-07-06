@@ -2,7 +2,7 @@
   "id": "patchprepare64330.printerStatus",
     "version": 1,
     "status": "proposed",
-    "name": "klipperstatus",
+    "name": "status",
     "ephemeral": false,
     "attributes": {
         "printer": {
