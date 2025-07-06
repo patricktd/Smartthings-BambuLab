@@ -3,6 +3,6 @@ components:
   - id: main
     label: BambuLab 
     capabilities:
-      - id: patchprepare64330.printerStatus
+      - id: patchprepare64330.status
     categories:
       - name: Printer

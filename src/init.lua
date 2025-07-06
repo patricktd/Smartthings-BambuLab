@@ -14,7 +14,7 @@ local json = require "dkjson"
 local discovery = require "discovery"
 
 -- capabilities
-local cap_status = capabilities["patchprepare64330.printerStatus"]
+local cap_status = capabilities["patchprepare64330.status"]
 
 -- global variables
 local refresh_timer                 -- timer object to refresh data and check online status
