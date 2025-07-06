@@ -4,6 +4,8 @@ components:
     label: BambuLab
     capabilities:
       - id: patchprepare64330.status
-        version: 1 # Boa prática incluir a versão
+        version: 1
+      - id: refresh
+        version: 1
     categories:
       - name: Printer
