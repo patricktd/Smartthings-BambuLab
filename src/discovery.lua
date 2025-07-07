@@ -4,7 +4,7 @@ local log = require "log"
 local discovery = {}
 
 function discovery.handle_discovery(driver, _should_continue)
-  log.info("Iniciando descoberta SSDP para Bambu Lab (v2)...")
+  log.info("Iniciando descoberta SSDP para Bambu Lab (v3)...")
 
   local udp = cosock.socket.udp()
   if not udp then
@@ -17,11 +17,15 @@ function discovery.handle_discovery(driver, _should_continue)
   udp:settimeout(5)
 
   -- =================================================================
-  --  NOVA LINHA ADICIONADA AQUI
+  --  CORREÇÃO APLICADA AQUI
   -- =================================================================
-  -- Inscreve o socket no grupo multicast SSDP. Isso é crucial em algumas redes
-  -- para garantir que as respostas multicast sejam recebidas.
-  udp:setoption("ip-add-membership", { multi = "239.255.255.250", interface = "0.0.0.0" })
+  -- A chave correta é "multiaddr", não "multi".
+  local ok, err = pcall(udp.setoption, udp, "ip-add-membership", { multiaddr = "239.255.255.250", interface = "0.0.0.0" })
+  if not ok then
+    log.error("Falha ao se inscrever no grupo multicast: " .. (err or "desconhecido"))
+    udp:close()
+    return
+  end
   log.info("Socket inscrito no grupo multicast SSDP.")
   -- =================================================================
 
@@ -35,9 +39,9 @@ function discovery.handle_discovery(driver, _should_continue)
     ""
   }, "\r\n")
 
-  local ok, err = udp:sendto(payload, "239.255.255.250", 1900)
-  if not ok then
-    log.error("Falha ao enviar pacote M-SEARCH: " .. (err or "desconhecido"))
+  local ok_send, err_send = udp:sendto(payload, "239.255.255.250", 1900)
+  if not ok_send then
+    log.error("Falha ao enviar pacote M-SEARCH: " .. (err_send or "desconhecido"))
     udp:close()
     return
   end
@@ -48,7 +52,6 @@ function discovery.handle_discovery(driver, _should_continue)
     local data, ip, port = udp:receivefrom()
     if data then
       log.info(string.format("Resposta SSDP recebida de %s:%d", ip, port))
-      -- (O resto do código de parse continua o mesmo)
       local headers = {}
       for line in data:gmatch("[^\r\n]+") do
         local k, v = line:match("^([%w%-%.]+):%s*(.+)")
