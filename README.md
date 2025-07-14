@@ -1,6 +1,6 @@
 # Smartthings BambuLab Edge Driver
 
-Not Tested. Dont install
+Not tested. Don’t install
 
 https://callaway.smartthings.com/channels/31e1f421-55b7-4df3-9ca4-7f0ab93c927a
 
