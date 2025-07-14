@@ -1,8 +1,6 @@
-name: 'Bambu Lab Driver'
-packageKey: 'bambulab.smarthings'
-version: '0.0.1'
-author: 'Patrick Teixeira'
-description: 'Driver para impressoras Bambu Lab'
-permissions:
-  lan: {}
-  discovery: {}
+name: bambu-printer-simple
+packageKey: bambu-printer-simple
+description: Impressora BambuLab simples para SmartThings
+profiles:
+  - singleBambuPrinter
+

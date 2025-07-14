@@ -1,0 +1,28 @@
+name: singleBambuPrinter
+components:
+  - id: main
+    capabilities:
+      - id: temperatureMeasurement
+        version: 1
+      - id: switch
+        version: 1
+metadata:
+  deviceType: generic
+  ocfDeviceType: oic.d.sensor
+  deviceTypeId: singleBambuPrinter
+preferences:
+  - title: Nome da Impressora
+    name: printerName
+    required: true
+    type: string
+    definition:
+      minLength: 1
+      maxLength: 32
+  - title: IP da Impressora
+    name: printerIp
+    required: true
+    type: string
+    definition:
+      minLength: 7
+      maxLength: 15
+
