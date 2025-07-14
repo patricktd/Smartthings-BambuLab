@@ -109,7 +109,7 @@ local function handle_refresh(driver, device)
 end
 
 -----------------------------------------------------------------
--- Definição e execução do driver
+-- Driver definition and execution
 -----------------------------------------------------------------
 
 local bambulab_driver = Driver("Bambu Lab", {
@@ -127,5 +127,5 @@ local bambulab_driver = Driver("Bambu Lab", {
   }
 })
 
--- CORREÇÃO FINAL: Use o nome correto do objeto do driver!
+-- Start the driver event loop
 bambulab_driver:run()
