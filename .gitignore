@@ -1,0 +1,8 @@
+# Ignore MacOS Finder files
+.DS_Store
+
+# Ignore build artifacts
+edge-driver-bambulab/
+
+*.zip
+
