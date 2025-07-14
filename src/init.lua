@@ -7,6 +7,7 @@ local log = require "log"
 local cosock = require "cosock"
 local socket = require "cosock.socket"
 local json = require "dkjson"
+local refresh = require "refresh"
 
 -- Módulo de descoberta customizado
 local discovery = require "discovery"
@@ -25,42 +26,7 @@ local cap_status = capabilities["patchprepare64330.status"]
 -- @param driver A instância do driver.
 -- @param device O dispositivo a ser atualizado.
 local function refresh_data(driver, device)
-  log.info(string.format("[%s] Atualizando dados da impressora...", device.id))
-
-  -- Precisamos do IP e da porta que foram salvos durante a descoberta
-  local ip = device.ip_address
-  local port = device.port
-
-  if not ip then
-    log.error(string.format("[%s] IP da impressora não encontrado. Não é possível atualizar.", device.id))
-    device:emit_event(cap_status.printer("offline"))
-    return
-  end
-  
-  -- OBS: A API real da Bambu Lab usa MQTT. Uma requisição HTTP simples pode não retornar o status completo.
-  -- Este exemplo fará um "ping" na porta para verificar se a impressora está online.
-  -- Para um status detalhado (printing, paused, etc.), seria necessário implementar um cliente MQTT.
-  local conn, err = socket.tcp()
-  if not conn then
-    log.error("Falha ao criar socket TCP: " .. (err or "desconhecido"))
-    return
-  end
-
-  conn:settimeout(5) -- Timeout de 5 segundos
-  local ok, err = conn:connect(ip, port)
-
-  if ok then
-    log.info(string.format("[%s] Impressora está online em %s:%d", device.id, ip, port))
-    -- Se a conexão for bem-sucedida, consideramos que está "standby".
-    -- A lógica real para obter "printing", etc., seria mais complexa.
-    device:emit_event(cap_status.printer("standby"))
-  else
-    log.error(string.format("[%s] Impressora offline ou inacessível: %s", device.id, err or "timeout"))
-    device:emit_event(cap_status.printer("offline"))
-  end
-
-  -- Fecha o socket em qualquer cenário para evitar vazamento de recursos
-  conn:close()
+  refresh.refresh_data(driver, device)
 end
 
 -----------------------------------------------------------------
