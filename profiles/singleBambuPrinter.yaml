@@ -14,15 +14,18 @@ preferences:
   - title: Nome da Impressora
     name: printerName
     required: true
-    type: string
+    preferenceType: string
     definition:
+      stringType: text
       minLength: 1
       maxLength: 32
+      default: "Minha Impressora"
   - title: IP da Impressora
     name: printerIp
     required: true
-    type: string
+    preferenceType: string
     definition:
+      stringType: text
       minLength: 7
       maxLength: 15
-
+      default: "192.168.0.100"

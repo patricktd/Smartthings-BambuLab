@@ -1,31 +1,30 @@
 local Driver = require('st.driver')
 local log = require('log')
 
-local function do_poll(device)
-  -- Pega as preferências do usuário
-local name = device.preferences["printerName"]
-local ip = device.preferences["printerIp"]
-  
-  log.info("Nome da impressora: " .. name)
-  log.info("IP da impressora: " .. ip)
-  
-  -- Aqui você faz a requisição HTTP pro IP configurado para buscar status da impressora
-  -- Exemplo:
-  -- local http = require("socket.http")
-  -- local body, code, headers, status = http.request("http://"..ip.."/api/status")
-  -- (implemente conforme API da Bambu)
+log.info(">>> Driver Edge BambuLab foi carregado e está aguardando discovery...")
+
+local function discovery(driver, opts, continue)
+  log.info(">>> Discovery foi chamado!")
+  driver:try_create_device({
+    type = "LAN",
+    device_network_id = "bambu-single-device",
+    label = "Bambu Printer Manual",
+    profile = "singleBambuPrinter",
+    manufacturer = "Bambu",
+    model = "Manual",
+    vendor_provided_label = "Bambu Printer Manual"
+  })
+  log.info(">>> Dispositivo Bambu Printer Manual criado!")
 end
 
 local function added_handler(driver, device)
-  log.info("Dispositivo BambuLab adicionado.")
-  do_poll(device)  -- Faz o primeiro poll logo após adicionar
+  log.info(">>> Handler ADDED chamado! Device: " .. device.id)
 end
 
 local driver = Driver("bambu-printer-simple", {
-  discovery = nil, -- remove discovery!
+  discovery = discovery,
   lifecycle_handlers = {
-    added = added_handler,
-    -- Inclua outros handlers conforme necessário
+    added = added_handler
   },
 })
 
