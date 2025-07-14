@@ -48,17 +48,19 @@ local function refresh_data(driver, device)
 
   conn:settimeout(5) -- Timeout de 5 segundos
   local ok, err = conn:connect(ip, port)
-  
+
   if ok then
     log.info(string.format("[%s] Impressora está online em %s:%d", device.id, ip, port))
     -- Se a conexão for bem-sucedida, consideramos que está "standby".
     -- A lógica real para obter "printing", etc., seria mais complexa.
     device:emit_event(cap_status.printer("standby"))
-    conn:close()
   else
     log.error(string.format("[%s] Impressora offline ou inacessível: %s", device.id, err or "timeout"))
     device:emit_event(cap_status.printer("offline"))
   end
+
+  -- Fecha o socket em qualquer cenário para evitar vazamento de recursos
+  conn:close()
 end
 
 -----------------------------------------------------------------
