@@ -1,9 +1,31 @@
-# Smartthings BambuLab Edge Driver
+# Bambu Lab Edge Driver
 
-Not tested. Don’t install
+This project provides an experimental [SmartThings Edge](https://developer.smartthings.com/docs/edge-device-drivers) driver for Bambu Lab 3D printers. It discovers printers on the local network via SSDP and exposes a simple status capability in the SmartThings app.
 
-https://callaway.smartthings.com/channels/31e1f421-55b7-4df3-9ca4-7f0ab93c927a
+## Requirements
 
-Driver Model
+- A SmartThings hub running firmware **0.47** or higher with Edge driver support.
+- A Bambu Lab printer connected to the same local network as the hub.
 
-https://github.com/againtalent/SmartThings-Klipper
+## Installation
+
+1. Enroll in the public channel and install the driver on your hub:
+   <https://callaway.smartthings.com/channels/31e1f421-55b7-4df3-9ca4-7f0ab93c927a>
+2. After installation, use the SmartThings mobile app to add a device and start discovery. The printer should appear automatically.
+
+*This driver is a work in progress and may not function in all environments.*
+
+## Running Tests
+
+The test suite is written with [Busted](https://olivinelabs.com/busted/). To run the tests locally:
+
+```bash
+# Install dependencies
+sudo apt-get install lua5.4 luarocks
+sudo luarocks install busted
+
+# Execute the tests
+busted -o gtest -v tests
+```
+
+The CI workflow runs these same tests automatically for every pull request.
