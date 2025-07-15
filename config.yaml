@@ -3,3 +3,6 @@ packageKey: bambu-printer-simple
 description: Impressora BambuLab simples para SmartThings
 profiles:
   - singleBambuPrinter
+permissions:
+  lan: {}
+  discovery: {}
