@@ -11,12 +11,12 @@ describe('added_handler', function()
     return driver
   end
   package.loaded['st.capabilities'] = {
-    ["custom.bambuPrinterStatus"] = {
+    ["patchprepare64330.bambuPrinterStatus"] = {
       printerStatus = function(value)
         return {capability = 'status', value = value}
       end
     },
-    ["custom.bambuPrinterProgress"] = {
+    ["patchprepare64330.bambuPrinterProgress"] = {
       progress = function(value)
         return {capability = 'progress', value = value}
       end

@@ -40,8 +40,8 @@ The test suite is written with [Busted](https://olivinelabs.com/busted/). To run
 sudo apt-get install lua5.4 luarocks
 sudo luarocks install busted
 
-# Execute the tests
-busted -o gtest -v tests
+# Execute the tests (UNIT_TEST=1 ensures the driver module returns test helpers)
+UNIT_TEST=1 busted -o gtest -v tests
 ```
 
 The CI workflow runs these same tests automatically for every pull request.
