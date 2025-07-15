@@ -1,0 +1,25 @@
+{
+    "id": "patchprepare64330.bambuPrinterMessage",
+    "version": 1,
+    "status": "proposed",
+    "name": "message",
+    "ephemeral": false,
+    "attributes": {
+        "message": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {}
+}
