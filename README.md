@@ -43,3 +43,7 @@ If you receive an error like `Permissions have been modified` when running
 `smartthings edge:drivers:package`, it means the permissions in `config.yaml`
 were changed after the driver was initially published. Create a new package by
 updating the `packageKey` in `config.yaml` before packaging again.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
