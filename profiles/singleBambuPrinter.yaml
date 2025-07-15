@@ -6,6 +6,10 @@ components:
         version: 1
       - id: patchprepare64330.bambuPrinterProgress
         version: 1
+metadata:
+  deviceType: generic
+  ocfDeviceType: oic.d.sensor
+  deviceTypeId: singleBambuPrinter
 preferences:
   - name: printerIp
     title: "IP da Impressora"
@@ -27,3 +31,4 @@ preferences:
       minLength: 1
       maxLength: 5
       default: "8883"
+      
