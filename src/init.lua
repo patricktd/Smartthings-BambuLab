@@ -1,5 +1,6 @@
 local Driver = require('st.driver')
 local log = require('log')
+local capabilities = require('st.capabilities')
 
 log.info(">>> Driver Edge BambuLab foi carregado e está aguardando discovery...")
 
@@ -27,6 +28,10 @@ local function added_handler(driver, device)
   device:set_field("ip", ip, {persist = true})
 
   log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
+
+  -- initialize capability values
+  device:emit_event(capabilities["custom.bambuPrinterStatus"].printerStatus("stop"))
+  device:emit_event(capabilities["custom.bambuPrinterProgress"].progress(0))
 end
 
 local driver = Driver("bambu-printer-simple", {

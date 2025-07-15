@@ -1,0 +1,13 @@
+id: custom.bambuPrinterProgress
+version: 1
+status: draft
+name: Bambu Printer Progress
+attributes:
+  progress:
+    schema:
+      type: number
+      minimum: 0
+      maximum: 100
+      unit: '%'
+    required: true
+commands: {}
