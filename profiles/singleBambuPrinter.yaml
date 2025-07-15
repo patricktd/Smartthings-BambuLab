@@ -11,15 +11,15 @@ metadata:
   ocfDeviceType: oic.d.sensor
   deviceTypeId: singleBambuPrinter
 preferences:
-  - title: Nome da Impressora
-    name: printerName
+  - title: Porta
+    name: printerPort
     required: true
     preferenceType: string
     definition:
       stringType: text
       minLength: 1
-      maxLength: 32
-      default: "Minha Impressora"
+      maxLength: 5
+      default: "8883"
   - title: IP da Impressora
     name: printerIp
     required: true
