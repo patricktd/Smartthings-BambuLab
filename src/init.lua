@@ -41,4 +41,11 @@ local driver = Driver("bambu-printer-simple", {
   },
 })
 
-driver:run()
+if os.getenv("UNIT_TEST") then
+  return {
+    driver = driver,
+    added_handler = added_handler,
+  }
+else
+  driver:run()
+end
