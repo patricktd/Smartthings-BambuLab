@@ -1,0 +1,14 @@
+id: custom.bambuPrinterStatus
+version: 1
+status: draft
+name: Bambu Printer Status
+attributes:
+  printerStatus:
+    schema:
+      type: string
+      enum:
+        - printing
+        - pause
+        - stop
+    required: true
+commands: {}

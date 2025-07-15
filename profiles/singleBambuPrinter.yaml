@@ -2,9 +2,9 @@ name: singleBambuPrinter
 components:
   - id: main
     capabilities:
-      - id: temperatureMeasurement
+      - id: custom.bambuPrinterStatus
         version: 1
-      - id: switch
+      - id: custom.bambuPrinterProgress
         version: 1
 metadata:
   deviceType: generic
