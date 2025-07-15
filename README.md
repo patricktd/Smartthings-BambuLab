@@ -29,3 +29,10 @@ busted -o gtest -v tests
 ```
 
 The CI workflow runs these same tests automatically for every pull request.
+
+## Packaging Notes
+
+If you receive an error like `Permissions have been modified` when running
+`smartthings edge:drivers:package`, it means the permissions in `config.yaml`
+were changed after the driver was initially published. Create a new package by
+updating the `packageKey` in `config.yaml` before packaging again.
