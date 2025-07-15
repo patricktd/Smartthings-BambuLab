@@ -30,8 +30,9 @@ local function added_handler(driver, device)
   log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
 
   -- initialize capability values
-  device:emit_event(capabilities["patchprepare64330.status"].printerStatus("stop"))
-  device:emit_event(capabilities["patchprepare64330.printProgress"].progress(0))
+  device:emit_event(capabilities["custom.bambuPrinterStatus"].printerStatus("stop"))
+device:emit_event(capabilities["custom.bambuPrinterProgress"].progress(0))
+
 end
 
 local driver = Driver("bambu-printer-simple", {

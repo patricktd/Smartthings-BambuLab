@@ -1,4 +1,5 @@
-id: patchprepare64330.printProgress
+# capabilities/custom.bambuPrinterProgress.yaml
+id: custom.bambuPrinterProgress
 version: 1
 status: draft
 name: Bambu Printer Progress
@@ -11,3 +12,4 @@ attributes:
       unit: '%'
     required: true
 commands: {}
+

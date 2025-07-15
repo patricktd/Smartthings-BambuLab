@@ -1,4 +1,5 @@
-id: patchprepare64330.status
+# capabilities/custom.bambuPrinterStatus.yaml
+id: custom.bambuPrinterStatus
 version: 1
 status: draft
 name: Bambu Printer Status
@@ -6,9 +7,6 @@ attributes:
   printerStatus:
     schema:
       type: string
-      enum:
-        - printing
-        - pause
-        - stop
+      enum: [printing, pause, stop]
     required: true
 commands: {}
