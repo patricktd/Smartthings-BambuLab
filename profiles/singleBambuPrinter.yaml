@@ -6,8 +6,6 @@ components:
         version: 1
       - id: patchprepare64330.bambuPrinterProgress
         version: 1
-    categories:
-      - name: Printer
 preferences:
   - name: printerIp
     title: "IP da Impressora"
