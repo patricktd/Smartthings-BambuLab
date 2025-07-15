@@ -2,6 +2,13 @@
 
 This project provides an experimental [SmartThings Edge](https://developer.smartthings.com/docs/edge-device-drivers) driver for Bambu Lab 3D printers. It discovers printers on the local network via SSDP and exposes a simple status capability in the SmartThings app.
 
+The driver now stores two persistent fields on each discovered device:
+
+- `status` – textual status for the printer, defaulting to `desconhecido`.
+- `ip` – IP address for the printer based on the "IP da Impressora" preference.
+
+These values are initialized when the device is added so the driver always has valid defaults.
+
 ## Requirements
 
 - A SmartThings hub running firmware **0.47** or higher with Edge driver support.

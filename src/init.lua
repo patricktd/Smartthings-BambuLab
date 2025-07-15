@@ -19,6 +19,14 @@ end
 
 local function added_handler(driver, device)
   log.info(">>> Handler ADDED chamado! Device: " .. device.id)
+  -- initialize persistent fields so the driver has default values
+  local status = device:get_field("status") or "desconhecido"
+  local ip = device:get_field("ip") or device.preferences["printerIp"] or "0.0.0.0"
+
+  device:set_field("status", status, {persist = true})
+  device:set_field("ip", ip, {persist = true})
+
+  log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
 end
 
 local driver = Driver("bambu-printer-simple", {
