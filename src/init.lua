@@ -31,7 +31,8 @@ local function added_handler(driver, device)
 
   -- initialize capability values
   device:emit_event(capabilities["patchprepare64330.bambuPrinterStatus"].printerStatus("stop"))
-device:emit_event(capabilities["patchprepare64330.bambuPrinterProgress"].progress(0))
+  device:emit_event(capabilities["patchprepare64330.bambuPrinterProgress"].progress(0))
+  device:emit_event(capabilities["patchprepare64330.bambuPrinterMessage"].progress(0))
 
 end
 
