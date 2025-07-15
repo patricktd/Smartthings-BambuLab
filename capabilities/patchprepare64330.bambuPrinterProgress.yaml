@@ -1,0 +1,16 @@
+name: Bambu Printer Progress
+attributes:
+  progress:
+    schema:
+      type: object
+      properties:
+        value:
+          type: number
+          minimum: 0
+          maximum: 100
+          unit: "%"
+      # As duas linhas abaixo foram adicionadas para a estrutura correta
+      additionalProperties: false
+      required:
+        - value
+commands: {}

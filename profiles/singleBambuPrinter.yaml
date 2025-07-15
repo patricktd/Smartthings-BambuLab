@@ -2,26 +2,16 @@ name: singleBambuPrinter
 components:
   - id: main
     capabilities:
-      - id: custom.bambuPrinterStatus
+      - id: patchprepare64330.bambuPrinterStatus
         version: 1
-      - id: custom.bambuPrinterProgress
+      - id: patchprepare64330.bambuPrinterProgress
         version: 1
-metadata:
-  deviceType: generic
-  ocfDeviceType: oic.d.sensor
-  deviceTypeId: singleBambuPrinter
+    categories:
+      - name: Printer
 preferences:
-  - title: Porta
-    name: printerPort
-    required: true
-    preferenceType: string
-    definition:
-      stringType: text
-      minLength: 1
-      maxLength: 5
-      default: "8883"
-  - title: IP da Impressora
-    name: printerIp
+  - name: printerIp
+    title: "IP da Impressora"
+    description: "O endereço de IP local da sua impressora Bambu Lab."
     required: true
     preferenceType: string
     definition:
@@ -29,3 +19,13 @@ preferences:
       minLength: 7
       maxLength: 15
       default: "192.168.0.100"
+  - name: printerPort
+    title: "Porta"
+    description: "A porta MQTT da impressora (geralmente 8883)."
+    required: true
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 1
+      maxLength: 5
+      default: "8883"

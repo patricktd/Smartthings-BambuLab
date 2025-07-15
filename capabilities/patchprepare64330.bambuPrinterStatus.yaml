@@ -1,0 +1,17 @@
+name: Bambu Printer Status
+attributes:
+  printerStatus:
+    schema:
+      type: object
+      properties:
+        value:
+          type: string
+          enum:
+            - printing
+            - pause
+            - stop
+      # A LINHA ABAIXO FOI ADICIONADA
+      additionalProperties: false
+      required:
+        - value
+commands: {}
