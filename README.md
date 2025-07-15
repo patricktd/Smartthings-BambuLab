@@ -9,6 +9,15 @@ The driver now stores two persistent fields on each discovered device:
 
 These values are initialized when the device is added so the driver always has valid defaults.
 
+## Preferences
+
+Two preferences control how the driver connects to your printer:
+
+- `printerIp` – IP address of the printer.
+- `printerPort` – network port used for connections (defaults to `8883`).
+
+You can set these options in the SmartThings app by opening the printer device, tapping the **︙** menu, choosing **Settings**, and editing the **IP da Impressora** and **Porta** fields.
+
 ## Requirements
 
 - A SmartThings hub running firmware **0.47** or higher with Edge driver support.
