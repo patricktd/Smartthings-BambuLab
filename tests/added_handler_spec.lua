@@ -16,9 +16,14 @@ describe('added_handler', function()
         return {capability = 'status', value = value}
       end
     },
-    ["patchprepare64330.bambuPrinterProgress"] = {
+    ["patchprepare64330.printerProgress"] = {
       progress = function(value)
         return {capability = 'progress', value = value}
+      end
+    },
+    ["patchprepare64330.message"] = {
+      message = function(value)
+        return {capability = 'message', value = value}
       end
     }
   }
@@ -54,6 +59,8 @@ describe('added_handler', function()
     assert.equal('stop', dev.events[1].value)
     assert.equal('progress', dev.events[2].capability)
     assert.equal(0, dev.events[2].value)
+    assert.equal('message', dev.events[3].capability)
+    assert.equal('', dev.events[3].value)
   end)
 
   it('prefers stored ip from preferences', function()
