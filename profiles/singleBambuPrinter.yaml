@@ -1,3 +1,4 @@
+id: singleBambuPrinter
 name: singleBambuPrinter
 components:
   - id: main
