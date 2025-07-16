@@ -1,12 +1,14 @@
 name: BambuPrinter
 components:
   - id: main
-    label: Printer 
+    label: Printer
     capabilities:
-      - id: switch
+      - id: patchprepare64330.printerStatus
+        version: 1
+      - id: patchprepare64330.printerProgress
         version: 1
     categories:
-    - name: Printer
+      - name: Printer
 preferences:
   - name: printerIp
     title: "IP Address"
