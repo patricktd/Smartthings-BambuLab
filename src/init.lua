@@ -42,11 +42,11 @@ local driver = Driver("bambu-printer", {
   },
 })
 
-if os.getenv("UNIT_TEST") then
-  return {
-    driver = driver,
-    added_handler = added_handler,
-  }
-else
-  driver:run()
-end
+--if os.getenv("UNIT_TEST") then
+--  return {
+--    driver = driver,
+--    added_handler = added_handler,
+--  }
+--else
+--  driver:run()
+--end
