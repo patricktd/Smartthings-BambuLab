@@ -1,8 +1,8 @@
-name: bambu-printer-simple
-packageKey: bambu-printer-simple
-description: Impressora BambuLab simples para SmartThings
+name: bambu-printer
+packageKey: bambu-printer
+description: Bambulab Printer Driver Edge
 profiles:
-  - singleBambuPrinter
+  - BambuPrinter
 permissions:
   lan: {}
   discovery: {}

@@ -1,8 +1,8 @@
 {
-    "id": "patchprepare64330.bambuPrinterStatus",
+    "id": "patchprepare64330.status",
     "version": 1,
     "status": "proposed",
-    "name": "Bambu Printer Status",
+    "name": "Printer Status",
     "ephemeral": false,
     "attributes": {
         "printer": {

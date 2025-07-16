@@ -1,16 +1,25 @@
 {
-    "id": "patchprepare64330.message",
+    "id": "patchprepare64330.progress",
     "version": 1,
     "status": "proposed",
-    "name": "message",
+    "name": "Printer Progress",
     "ephemeral": false,
     "attributes": {
-        "message": {
+        "percentComplete": {
             "schema": {
                 "type": "object",
                 "properties": {
                     "value": {
-                        "type": "string"
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    },
+                    "unit": {
+                        "type": "string",
+                        "enum": [
+                            "%"
+                        ],
+                        "default": "%"
                     }
                 },
                 "additionalProperties": false,

@@ -8,12 +8,12 @@ local function discovery(driver, opts, continue)
   log.info(">>> Discovery foi chamado!")
   driver:try_create_device({
     type = "LAN",
-    device_network_id = "bambu-single-device",
-    label = "Bambu Printer Manual",
-    profile = "singleBambuPrinter",
-    manufacturer = "Bambu",
+    device_network_id = "bambu-device",
+    label = "Bambulab Printer",
+    profile = "BambuPrinter",
+    manufacturer = "Bambulab",
     model = "Manual",
-    vendor_provided_label = "Bambu Printer Manual"
+    vendor_provided_label = "Bambu Printer PATTETECH"
   })
   log.info(">>> Dispositivo Bambu Printer Manual criado!")
 end
@@ -30,13 +30,12 @@ local function added_handler(driver, device)
   log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
 
   -- initialize capability values
-  device:emit_event(capabilities["patchprepare64330.bambuPrinterStatus"].printerStatus("stop"))
-  device:emit_event(capabilities["patchprepare64330.printerProgress"].progress(0))
-  device:emit_event(capabilities["patchprepare64330.message"].message(""))
+  device:emit_event(capabilities["patchprepare64330.status"].status("stop"))
+  device:emit_event(capabilities["patchprepare64330.progress"].progress(0))
 
 end
 
-local driver = Driver("bambu-printer-simple", {
+local driver = Driver("bambu-printer", {
   discovery = discovery,
   lifecycle_handlers = {
     added = added_handler
