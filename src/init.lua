@@ -30,8 +30,8 @@ local function added_handler(driver, device)
   log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
 
   -- initialize capability values
-  device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("stop"))
-  device:emit_event(capabilities["patchprepare64330.printerProgress"].printerProgress(0))
+  device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("stop"))
+  device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(0))
 
 end
 
