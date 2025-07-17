@@ -1,4 +1,4 @@
-name: "bambulab.discovered-printer.v1" # Um novo nome para o perfil
+name: "bambulab.discovered-printer.v1"
 icon: "st-essentials.printer"
 components:
   - id: main
@@ -12,4 +12,3 @@ components:
         version: 1
     categories:
       - name: Printer
-# A secção "preferences" foi removida intencionalmente.
