@@ -1,8 +1,24 @@
-name: bambu-printer
-packageKey: bambu-printer
-description: Bambulab Printer Driver Edge
-profiles:
-  - BambuPrinter
-permissions:
-  lan: {}
-  discovery: {}
+name: 'Bambu Lab Printer Driver'
+version: '2025-07-17T18:00:00.000Z'
+author: 'Parceiro de Programacao'
+description: 'A driver to discover and control Bambu Lab printers locally.'
+license: 'Apache-2.0'
+
+device-profiles:
+  - name: bambulab-printer.v1
+  - name: bambulab.discovery.v1
+
+# ===================================================================
+# >> ESTA SECÇÃO É A CAUSA DO ERRO E PRECISA DE ESTAR PRESENTE <<
+# Ela diz ao Hub para carregar as bibliotecas de descoberta.
+discovery:
+  - type: ssdp
+    ssdp_term: "urn:bambulab-com:device:3dprinter:1"
+    device_profile: bambulab-printer.v1
+# ===================================================================
+
+fingerprints:
+  - id: "bambulab/discovery-device"
+    deviceLabel: "Bambu Lab Discovery"
+    profile: bambulab.discovery.v1
+    driver: bambulab-driver
