@@ -1,0 +1,14 @@
+name: bambulab.discovered-printer.v1
+icon: "st-essentials.printer"
+components:
+  - id: main
+    label: Printer
+    capabilities:
+      - id: patchprepare64330.printerStatus
+        version: 1
+      - id: patchprepare64330.printerProgress
+        version: 1
+      - id: refresh
+        version: 1
+    categories:
+      - name: Printer
