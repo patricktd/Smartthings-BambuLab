@@ -4,4 +4,3 @@ components:
     capabilities:
       - id: refresh
         version: 1
-# Sem a secção 'categories' para máxima compatibilidade
