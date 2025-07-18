@@ -1,38 +1,39 @@
--- src/init.lua - A NOSSA BASE DE TRABALHO FINAL
 local Driver = require('st.driver')
 local log = require('log')
 local capabilities = require('st.capabilities')
 
-log.info(">>> Driver Edge BambuLab foi carregado e está aguardando discovery...")
+log.info(">>> Driver Bambu Printer carregado...")
 
--- CRIA OS DISPOSITIVOS
 local function discovery(driver, opts, continue)
-  log.info(">>> Discovery foi chamado!")
+  log.info(">>> Discovery chamado!")
   local new_dni = string.format("bambulab-manual-%s", os.time())
-  log.info(">>> Gerando novo ID único para o dispositivo: " .. new_dni)
+  log.info(">>> Gerando novo DNI: " .. new_dni)
   
   driver:try_create_device({
     type = "LAN",
     device_network_id = new_dni,
     label = "Bambulab Printer",
-    profile = "BambuPrinter"
+    profile = "BambuPrinter.v1" -- <--- NOME ALINHADO COM O PERFIL
   })
 end
 
--- CONFIGURA OS DISPOSITIVOS CRIADOS
 local function added_handler(driver, device)
-  log.info(">>> Handler ADDED chamado! Device: " .. device.id)
-  device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Offline: Configure"))
+  log.info(string.format(">>> Handler ADDED chamado para o dispositivo: %s", device.id))
+  device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Offline: Configure"))
   device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(0))
 end
 
--- CONSTRÓI O DRIVER
-local driver = Driver("bambu-printer", {
+-- Usa o packageKey definido no config.yaml
+local driver = Driver("bambu-printer-patricktd", { -- <--- NOME ALINHADO COM O packageKey
   discovery = discovery,
   lifecycle_handlers = {
-    added = added_handler
+    added = added_handler,
+    -- Vamos adicionar o infoChanged aqui para o futuro
+    infoChanged = function(driver, device)
+      log.info(string.format(">>> Configurações alteradas para: %s", device.label))
+      -- A lógica MQTT virá aqui
+    end
   },
 })
 
--- INICIA O DRIVER
 driver:run()
