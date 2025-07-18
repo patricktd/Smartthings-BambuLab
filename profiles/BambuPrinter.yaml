@@ -1,4 +1,5 @@
 name: BambuPrinter
+icon: "st-essentials.printer" 
 components:
   - id: main
     label: Printer
