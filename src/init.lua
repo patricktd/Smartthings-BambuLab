@@ -1,7 +1,8 @@
 local Driver = require('st.driver')
 local log = require('log')
 local capabilities = require('st.capabilities')
-local mqtt = require('st.mqtt')
+local mqtt = require('mqtt')
+local cosock = require('cosock')
 local json = require('dkjson')
 
 local BAMBU_CA_CERT = [[
@@ -53,15 +54,23 @@ local function connect_mqtt(driver, device)
     return
   end
 
-  local client = mqtt.new(ip, port, serial)
+  local client = mqtt.client({
+    uri = string.format("%s:%s", ip, port),
+    clean = true,
+    id = serial,
+    username = "bblp",
+    password = pass,
+    secure = true
+  })
   
   client:on("connect", function()
     device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Conectado"))
     local topic = string.format("device/%s/report", serial)
-    client:subscribe(topic)
+    client:subscribe({topic = topic})
   end)
 
-  client:on("message", function(topic, payload)
+  client:on("message", function(msg)
+    local payload = msg.payload
     local data, pos, err = json.decode(payload)
     if err or not data.print then return end
 
@@ -74,19 +83,19 @@ local function connect_mqtt(driver, device)
     end
   end)
   
-  client:on("error", function(_, err)
-      device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Erro de Conexão"))
+  client:on("error", function(err)
+    device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Erro de Conexão"))
+    log.error("MQTT error", err)
   end)
 
   device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Conectando..."))
-  
-  client:start({
-    username = "bblp",
-    password = pass,
-    tls = {
-      ca = BAMBU_CA_CERT
-    }
-  })
+
+  cosock.spawn(function()
+    local ok, err = mqtt.run_sync(client)
+    if not ok then
+      log.error("MQTT loop stopped", err)
+    end
+  end, "mqtt-loop")
 end
 
 local function info_changed_handler(driver, device, event, args)
