@@ -1,5 +1,4 @@
-name: BambuPrinter.v1 # <--- NOME ALINHADO COM O CONFIG.YAML
-icon: "st-essentials.printer" 
+name: BambuPrinter
 components:
   - id: main
     label: Printer

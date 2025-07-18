@@ -1,12 +1,8 @@
-name: 'Bambu Printer'
-packageKey: 'bambu-printer-patricktd' # Usaremos esta chave consistente
-version: '2025-07-18T18:15:00.000Z'
-author: 'Patrick TD'
-license: 'Apache-2.0'
-description: 'Driver para adicionar impressoras Bambu Lab manualmente.'
-
+name: bambu-printer
+packageKey: bambu-printer
+description: Bambulab Printer Driver Edge
+profiles:
+  - BambuPrinter
 permissions:
   lan: {}
-
-device-profiles:
-  - name: BambuPrinter.v1 # O nome do perfil que vamos usar
+  discovery: {}
