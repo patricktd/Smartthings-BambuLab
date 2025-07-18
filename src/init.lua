@@ -1,6 +1,5 @@
 local Driver = require('st.driver')
 local log = require('log')
-local capabilities = require('st.capabilities')
 
 log.info(">>> Starting driver... <<<")
 
