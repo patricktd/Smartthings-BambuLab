@@ -6,9 +6,17 @@ log.info(">>> Driver Edge BambuLab foi carregado e está aguardando discovery...
 
 local function discovery(driver, opts, continue)
   log.info(">>> Discovery foi chamado!")
+
+  -- =================================================================
+  -- >> A MÁGICA ACONTECE AQUI <<
+  -- Em vez de um ID fixo, geramos um ID de rede (DNI) único usando a hora atual.
+  local new_dni = string.format("bambulab-printer-%s", os.time())
+  log.info(">>> Gerando DNI único: " .. new_dni)
+  -- =================================================================
+
   driver:try_create_device({
     type = "LAN",
-    device_network_id = "bambu-device-01", 
+    device_network_id = new_dni, -- Usamos o DNI único aqui
     label = "Bambulab Printer",
     profile = "BambuPrinter",
     manufacturer = "Bambulab",
