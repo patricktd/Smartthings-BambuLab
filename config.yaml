@@ -19,4 +19,4 @@ fingerprints:
   - id: "bambulab/discovery-device"
     deviceLabel: "Bambu Lab Discovery"
     profile: bambulab.discovery.v1
-    driver: 'bambu-printer-patricktd'
+    driver: 'bambup'

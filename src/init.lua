@@ -1,5 +1,6 @@
 local Driver = require('st.driver')
 local log = require('log')
+local capabilities = require('st.capabilities')
 
 log.info(">>> Starting driver... <<<")
 
@@ -37,7 +38,8 @@ local function start_discovery(driver)
   log.info("[BAMBU LOG] >>> SSDP listener started successfully. Awaiting printer packets...")
 end
 
-local bambu_driver = Driver("bambu-printer-patricktd", {
+local bambu_driver = Driver("bambup", {
+
   -- The only thing we define in the constructor is our entry point.
   discovery = start_discovery
 })
