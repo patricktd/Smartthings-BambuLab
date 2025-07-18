@@ -1,0 +1,8 @@
+name: bambu-printer
+packageKey: bambu-printer
+description: Bambulab Printer Driver Edge
+profiles:
+  - BambuPrinter
+permissions:
+  lan: {}
+  discovery: {}

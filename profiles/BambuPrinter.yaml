@@ -1,0 +1,32 @@
+name: BambuPrinter
+icon: "st-essentials.printer" 
+components:
+  - id: main
+    label: Printer
+    capabilities:
+      - id: patchprepare64330.printerStatus
+        version: 1
+      - id: patchprepare64330.printerProgress
+        version: 1
+    categories:
+      - name: Printer
+preferences:
+  - name: printerIp
+    title: "IP Address"
+    description: "IP address of the printer"
+    required: true
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 7
+      maxLength: 15
+      default: "192.168.1.x"
+  - name: printerPort
+    title: "Port"
+    description: "Port Number MQTT of Printer (Default:8883)."
+    required: true
+    preferenceType: integer
+    definition:
+      minimum: 1
+      maximum: 100000
+      default: 8883

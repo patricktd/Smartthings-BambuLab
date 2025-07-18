@@ -1,51 +1,49 @@
--- require st provided libraries
-local capabilities = require "st.capabilities"
-local Driver = require "st.driver"
-local log = require "log"
+local Driver = require('st.driver')
+local log = require('log')
+local capabilities = require('st.capabilities')
 
--- require custom handlers from driver package
-local command_handlers = require "command_handlers"
-local discovery = require "discovery"
+log.info(">>> Driver Edge BambuLab foi carregado e está aguardando discovery...")
 
------------------------------------------------------------------
--- local functions
------------------------------------------------------------------
--- this is called once a device is added by the cloud and synchronized down to the hub
-local function device_added(driver, device)
-  log.info("[" .. device.id .. "] Adding new Hello World device")
-
-  -- set a default or queried state for each capability attribute
-  device:emit_event(capabilities.switch.switch.on())
+local function discovery(driver, opts, continue)
+  log.info(">>> Discovery foi chamado!")
+  driver:try_create_device({
+    type = "LAN",
+    device_network_id = "bambu-device-01", 
+    label = "Bambulab Printer",
+    profile = "BambuPrinter",
+    manufacturer = "Bambulab",
+    model = "Manual",
+    vendor_provided_label = "Bambu Printer PATTETECH"
+  })
+  log.info(">>> Tentativa de criação do dispositivo Bambu Printer Manual enviada!")
 end
 
--- this is called both when a device is added (but after `added`) and after a hub reboots.
-local function device_init(driver, device)
-  log.info("[" .. device.id .. "] Initializing Hello World device")
+-- Este handler é chamado uma vez quando o dispositivo é adicionado ao hub
+local function added_handler(driver, device)
+  log.info(">>> Handler ADDED chamado! Device: " .. device.id)
+  
+  -- Inicializa campos persistentes
+  local status = device:get_field("status") or "desconhecido"
+  local ip = device:get_field("ip") or device.preferences["printerIp"] or "0.0.0.0"
 
-  -- mark device as online so it can be controlled from the app
-  device:online()
+  device:set_field("status", status, {persist = true})
+  device:set_field("ip", ip, {persist = true})
+
+  log.info(string.format(">>> Campos iniciais setados: status=%s, ip=%s", status, ip))
+
+  device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("desconhecido"))
+  device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(0))
+
+  log.info(">>> Estado inicial da capability 'printerStatus' foi definido.")
 end
 
--- this is called when a device is removed by the cloud and synchronized down to the hub
-local function device_removed(driver, device)
-  log.info("[" .. device.id .. "] Removing Hello World device")
-end
-
--- create the driver object
-local hello_world_driver = Driver("helloworld", {
-  discovery = discovery.handle_discovery,
+-- Cria a instância do driver com os handlers
+local driver = Driver("bambu-printer", {
+  discovery = discovery,
   lifecycle_handlers = {
-    added = device_added,
-    init = device_init,
-    removed = device_removed
+    added = added_handler
   },
-  capability_handlers = {
-    [capabilities.switch.ID] = {
-      [capabilities.switch.commands.on.NAME] = command_handlers.switch_on,
-      [capabilities.switch.commands.off.NAME] = command_handlers.switch_off,
-    },
-  }
 })
 
--- run the driver
-hello_world_driver:run()
+-- Inicia o driver
+driver:run()
