@@ -1,48 +1,51 @@
-local Driver = require('st.driver')
-local log = require('log')
-local capabilities = require('st.capabilities')
+-- require st provided libraries
+local capabilities = require "st.capabilities"
+local Driver = require "st.driver"
+local log = require "log"
 
-log.info(">>> Starting driver... <<<")
+-- require custom handlers from driver package
+local command_handlers = require "command_handlers"
+local discovery = require "discovery"
 
--- =================================================================
--- Handler that processes the printer's packet when it arrives
--- =================================================================
-local function bambu_ssdp_handler(driver, ssdp_packet)
-  log.info("[BAMBU LOG] >>> SSDP PACKET RECEIVED! Processing...")
+-----------------------------------------------------------------
+-- local functions
+-----------------------------------------------------------------
+-- this is called once a device is added by the cloud and synchronized down to the hub
+local function device_added(driver, device)
+  log.info("[" .. device.id .. "] Adding new Hello World device")
 
-  local serial_number = ssdp_packet.usn
-  local device_label = ssdp_packet['DevName.bambu.com'] or ("Bambu Lab " .. serial_number)
-  log.info(string.format("[BAMBU LOG] >>> PRINTER FOUND: %s (S/N: %s)", device_label, serial_number))
+  -- set a default or queried state for each capability attribute
+  device:emit_event(capabilities.switch.switch.on())
+end
 
-  local metadata = {
-    profile = "bambulab.discovered-printer.v1",
-    device_network_id = serial_number,
-    label = device_label
+-- this is called both when a device is added (but after `added`) and after a hub reboots.
+local function device_init(driver, device)
+  log.info("[" .. device.id .. "] Initializing Hello World device")
+
+  -- mark device as online so it can be controlled from the app
+  device:online()
+end
+
+-- this is called when a device is removed by the cloud and synchronized down to the hub
+local function device_removed(driver, device)
+  log.info("[" .. device.id .. "] Removing Hello World device")
+end
+
+-- create the driver object
+local hello_world_driver = Driver("helloworld", {
+  discovery = discovery.handle_discovery,
+  lifecycle_handlers = {
+    added = device_added,
+    init = device_init,
+    removed = device_removed
+  },
+  capability_handlers = {
+    [capabilities.switch.ID] = {
+      [capabilities.switch.commands.on.NAME] = command_handlers.switch_on,
+      [capabilities.switch.commands.off.NAME] = command_handlers.switch_off,
+    },
   }
-  -- Device creation happens here
-  driver:try_create_device(metadata)
-end
-
--- =================================================================
--- Generic Discovery Handler (Our Entry Point)
--- =================================================================
-local function start_discovery(driver)
-  log.info("[BAMBU LOG] >>> Generic 'discovery' handler called on startup.")
-  
-  -- Sets which function will handle SSDP packets when they arrive
-  driver:set_ssdp_handler(bambu_ssdp_handler, "urn:bambulab-com:device:3dprinter:1")
-  
-  -- Starts listening on the network
-  driver:discover()
-  
-  log.info("[BAMBU LOG] >>> SSDP listener started successfully. Awaiting printer packets...")
-end
-
-local bambu_driver = Driver("bambup", {
-
-  -- The only thing we define in the constructor is our entry point.
-  discovery = start_discovery
 })
 
--- Run the driver
-bambu_driver:run()
+-- run the driver
+hello_world_driver:run()
