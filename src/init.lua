@@ -39,8 +39,8 @@ local function discovery(driver, opts, continue)
 end
 
 local function added_handler(driver, device)
-  device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Offline: Configure"))
-  device:emit_event(capabilities["patchprepare64330.printerProgress"].progress(0))
+  device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Offline: Configure"))
+  device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(0))
 end
 
 local function connect_mqtt(driver, device)
@@ -50,7 +50,7 @@ local function connect_mqtt(driver, device)
   local serial = device.preferences.serialNumber
 
   if not (ip and port and pass and serial and ip ~= "192.168.1.x" and serial ~= "Serial") then
-    device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Config. Incompleta"))
+    device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Config. Incompleta"))
     return
   end
 
@@ -65,7 +65,7 @@ local function connect_mqtt(driver, device)
   })
   
   client:on("connect", function()
-    device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Conectado"))
+    device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Conectado"))
     local topic = string.format("device/%s/report", serial)
     client:subscribe({topic = topic})
   end)
@@ -77,19 +77,19 @@ local function connect_mqtt(driver, device)
 
     local print_data = data.print
     if print_data.gcode_state then
-      device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus(print_data.gcode_state))
+      device:emit_event(capabilities["patchprepare64330.printerStatus"].printer(print_data.gcode_state))
     end
     if print_data.mc_percent then
-      device:emit_event(capabilities["patchprepare64330.printerProgress"].progress(print_data.mc_percent))
+        device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(print_data.mc_percent))
     end
   end)
   
   client:on("error", function(err)
-    device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Erro de Conexão"))
+    device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Erro de Conexão"))
     log.error("MQTT error", err)
   end)
 
-  device:emit_event(capabilities["patchprepare64330.printerStatus"].printerStatus("Conectando..."))
+  device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Conectando..."))
 
   cosock.spawn(function()
     local ok, err = mqtt.run_sync(client)
