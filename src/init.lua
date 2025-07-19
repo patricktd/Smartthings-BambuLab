@@ -118,10 +118,20 @@ local function info_changed_handler(driver, device, event, args)
   connect_mqtt(driver, device)
 end
 
+local function init_handler(driver, device)
+  connect_mqtt(driver, device)
+end
+
+local function do_configure_handler(driver, device)
+  connect_mqtt(driver, device)
+end
+
 local driver = Driver("bambu-printer-novo-id", {
   discovery = discovery,
   lifecycle_handlers = {
     added = added_handler,
+    init = init_handler,
+    doConfigure = do_configure_handler,
     infoChanged = info_changed_handler
   },
 })
