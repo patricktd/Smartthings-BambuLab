@@ -1,3 +1,5 @@
+-- Início do arquivo init.lua
+
 local Driver = require('st.driver')
 local log = require('log')
 local capabilities = require('st.capabilities')
@@ -29,17 +31,6 @@ HMUfpIBvFSDJ3gyICh3WZlXi/EjJKSZp4A==
 -----END CERTIFICATE-----
 ]]
 
-local CERT_PATH = "/tmp/bambu_ca.pem"
-
-local function ensure_ca_file()
-  local fh = io.open(CERT_PATH, "r")
-  if not fh then
-    fh = assert(io.open(CERT_PATH, "w"))
-    fh:write(BAMBU_CA_CERT)
-  end
-  if fh then fh:close() end
-end
-
 local function discovery(driver, opts, continue)
   local new_dni = string.format("bambulab-manual-%s", os.time())
   driver:try_create_device({
@@ -56,21 +47,18 @@ local function added_handler(driver, device)
 end
 
 local function connect_mqtt(driver, device)
-  local ip = device.preferences.printerIp
+  local ip = device.preferences.printerIp:match("^%s*(.-)%s*$")
   local port = device.preferences.printerPort
   local pass = device.preferences.accessCode
   local serial = device.preferences.serialNumber
 
-  if not (ip and port and pass and serial and ip ~= "192.168.1.x" and serial ~= "Serial") then
+  if not (ip and port and pass and serial and ip ~= "" and ip ~= "192.168.1.x" and serial ~= "Serial") then
     device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Config. Incompleta"))
     return
   end
 
-
-  ensure_ca_file()
-
   local client = mqtt.client({
-    uri = string.format("%s:%s", ip, port),
+    uri = string.format("mqtts://%s:%s", ip, port),
     clean = true,
     id = serial,
     username = "bblp",
@@ -78,26 +66,30 @@ local function connect_mqtt(driver, device)
     secure = {
       mode = "client",
       protocol = "tlsv1_2",
-      cafile = CERT_PATH,
+      ca_data = BAMBU_CA_CERT,
       verify = "peer",
       options = "all",
     }
   })
   
+  -- Lógica de conexão melhorada
   client:on("connect", function()
-    device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Conectado"))
+    log.info("MQTT conectado com sucesso!")
+    -- Define o status como 'Idle' (Ocioso)
+    device:emit_event(capabilities["patchprepare64330.printerStatus"].printer("Idle"))
     local topic = string.format("device/%s/report", serial)
     client:subscribe({topic = topic})
   end)
 
   client:on("message", function(msg)
     local payload = msg.payload
-    local data, pos, err = json.decode(payload)
-    if err or not data.print then return end
+    local ok, data = pcall(json.decode, payload)
+    if not ok or not data or not data.print then return end
 
     local print_data = data.print
+    
     if print_data.gcode_state then
-      device:emit_event(capabilities["patchprepare64330.printerStatus"].printer(print_data.gcode_state))
+        device:emit_event(capabilities["patchprepare64330.printerStatus"].printer(print_data.gcode_state))
     end
     if print_data.mc_percent then
         device:emit_event(capabilities["patchprepare64330.printerProgress"].percentComplete(print_data.mc_percent))
@@ -132,3 +124,5 @@ local driver = Driver("bambu-printer-novo-id", {
 })
 
 driver:run()
+
+-- Fim do arquivo init.lua
