@@ -47,8 +47,11 @@ local function added_handler(driver, device)
 end
 
 local function connect_mqtt(driver, device)
-  local ip = device.preferences.printerIp:match("^%s*(.-)%s*$")
-  local port = device.preferences.printerPort
+  local ip = device.preferences.printerIp or ""
+  -- trim spaces and remove optional square brackets
+  ip = ip:match("^%s*(.-)%s*$"):gsub("[%[%]]", "")
+
+  local port = tostring(device.preferences.printerPort or ""):match("^%s*(.-)%s*$")
   local pass = device.preferences.accessCode
   local serial = device.preferences.serialNumber
 
