@@ -34,13 +34,13 @@ preferences:
     definition:
       stringType: text
       maxLength: 8
-      default: "Access Code"
+      default: "00000000"
   - name: serialNumber
     title: "Serial Number"
     description: "Found on the printer's screen or in Bambu Studio."
     required: true
     preferenceType: string
     definition:
-      stringType: text
+      stringType: password
       maxLength: 15
       default: "Serial"
