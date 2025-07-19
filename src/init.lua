@@ -54,6 +54,7 @@ local function connect_mqtt(driver, device)
     return
   end
 
+
   local client = mqtt.client({
     uri = string.format("%s:%s", ip, port),
     clean = true,

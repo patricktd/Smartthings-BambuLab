@@ -33,6 +33,7 @@ preferences:
     preferenceType: string
     definition:
       stringType: text
+      maxLength: 8
       default: "Access Code"
   - name: serialNumber
     title: "Serial Number"
@@ -41,4 +42,5 @@ preferences:
     preferenceType: string
     definition:
       stringType: text
+      maxLength: 15
       default: "Serial"
