@@ -10,6 +10,8 @@ The driver now stores two persistent fields on each discovered device:
 These values are initialized when the device is added so the driver always has valid defaults.
 
 ## Preferences
+**Note:** The serial number can be up to 15 characters and the access code up to 8 characters.
+
 
 Two preferences control how the driver connects to your printer:
 
