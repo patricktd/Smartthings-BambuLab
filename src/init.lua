@@ -11,22 +11,34 @@ MIIDdTCCAl2gAwIBAgILBAAAAAABFUtaw5QwDQYJKoZIhvcNAQEFBQAwVzELMAkG
 A1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNVBAsTB1Jv
 b3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw05ODA5MDExMjAw
 MDBaFw0yODAxMjgxMjAwMDBaMFcxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9i
-YWxTaWduIG52LXNhMRAwDgNVQQLEwdSb290IENBMRswGQYDVQQDExJHbG9iYWxT
+YWxTaWduIG52LXNhMRAwDgYDVQQLEwdSb290IENBMRswGQYDVQQDExJHbG9iYWxT
 aWduIFJvb3QgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaDuaZ
-jc6j40+Kfvvxi4Mla+pIH/EqsLmVEQS98GPR4mdmzssCoZdQXzXdPDjq/iTxGVG/
-kMCdpA4bn1dMC6UPhhdOBSuToIhsNrWCFktUfROQE5/GhDsspe56CFxvLtpVb28T
-aFt6LDU20Gmm57ZCrFzfrE7DoAIM8P4JCI5c3sIj3xNIHsyZjXpLtRma+wbcDH8p
-OdbpGvMsIydIDgCesTbfPbDNAoEJASF2LBHJZUhsEffT79/wG9V91ejf7SMsNTxJ
-sS6yYUD3YOGAaob3fVLevajgcyz3TgTxGD6d6lOoGMSDXvLeGXkFk+IHCyJSoJ2o
-+6GtawW6f8i9AgMBAAGjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTAD
-AQH/MB0GA1UdDgQWBBRge2YaAo5iSir3C63shDxD5GmdXjANBgkqhkiG9w0BAQUF
-AAOCAQEAMFZo+uIP7/M6RoGU2AFec7/TE5DBHnaUjGUX3XPta7lqAfYVNbATo031
-i2bQMeUR/djOc774T1C52jGv6IRTClBtIsoTaj1Vrb2omQv10p9sB3EMLkFaaO3E
-aGSfbnlSDe+gHwvBf1uKmIQqqzVhfchxSZEjAGR+hMvctAQjsUu9lYEEvVyBdvacc
-wIOxej2Sk3OonDbn+0A+Sj8ppim5oo+QXvK0LcpINF+gh9klVFuWebG/C4FmrIeY
-2VEciE2j9ESvsun8AakKvHZzNch5+Dir+jZYsX邱/iMHMeonJgUHvy
+jc6j40+Kfvvxi4Mla+pIH/EqsLmVEQS98GPR4mdmzxzdzxtIK+6NiY6arymAZavp
+xy0Sy6scTHAHoT0KMM0VjU/43dSMUBUc71DuxC73/OlS8pF94G3VNTCOXkNz8kHp
+1Wrjsok6Vjk4bwY8iGlbKk3Fp1S4bInMm/k8yuX9ifUSPJJ4ltbcdG6TRGHRjcdG
+snUOhugZitVtbNV4FpWi6cgKOOvyJBNPc1STE4U6G7weNLWLBYy5d4ux2x8gkasJ
+U26Qzns3dLlwR5EiUWMWea6xrkEmCMgZK9FGqkjWZCrXgzT/LCrBbBlDSgeF59N8
+9iFo7+ryUp9/k5DPAgMBAAGjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
+BTADAQH/MB0GA1UdDgQWBBRge2YaRQ2XyolQL30EzTSo//z9SzANBgkqhkiG9w0B
+AQUFAAOCAQEA1nPnfE920I2/7LqivjTFKDK1fPxsnCwrvQmeU79rXqoRSLblCKOz
+yj1hTdNGCbM+w6DjY1Ub8rrvrTnhQ7k4o+YviiY776BQVvnGCv04zcQLcFGUl5gE
+38NflNUVyRRBnMRddWQVDf9VMOyGj/8N7yy5Y0b2qvzfvGn9LhJIZJrglfCm7ymP
+AbEVtQwdpf5pLGkkeB6zpxxxYu7KyJesF12KwvhHhm4qxFYxldBniYUr+WymXUad
+DKqC5JlR3XC321Y9YeRq4VzW9v493kHMB65jUr9TU/Qr6cf9tveCX4XSQRjbgbME
+HMUfpIBvFSDJ3gyICh3WZlXi/EjJKSZp4A==
 -----END CERTIFICATE-----
 ]]
+
+local CERT_PATH = "/tmp/bambu_ca.pem"
+
+local function ensure_ca_file()
+  local fh = io.open(CERT_PATH, "r")
+  if not fh then
+    fh = assert(io.open(CERT_PATH, "w"))
+    fh:write(BAMBU_CA_CERT)
+  end
+  if fh then fh:close() end
+end
 
 local function discovery(driver, opts, continue)
   local new_dni = string.format("bambulab-manual-%s", os.time())
@@ -55,13 +67,21 @@ local function connect_mqtt(driver, device)
   end
 
 
+  ensure_ca_file()
+
   local client = mqtt.client({
     uri = string.format("%s:%s", ip, port),
     clean = true,
     id = serial,
     username = "bblp",
     password = pass,
-    secure = true
+    secure = {
+      mode = "client",
+      protocol = "tlsv1_2",
+      cafile = CERT_PATH,
+      verify = "peer",
+      options = "all",
+    }
   })
   
   client:on("connect", function()
