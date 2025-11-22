@@ -73,4 +73,4 @@ preferences:
     definition:
       stringType: password
       maxLength: 15
-      default: "Serial"
+      default: "000000000000000"
