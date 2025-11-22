@@ -1,15 +1,45 @@
 name: BambuPrinter
-icon: "st-essentials.printer" 
 components:
   - id: main
     label: Printer
     capabilities:
-      - id: patchprepare64330.printerStatus
-        version: 1
       - id: patchprepare64330.printerProgress
+        version: 1
+      - id: schoolheart47510.printerStatusV2
+        version: 1
+      - id: schoolheart47510.statusMessage
+        version: 1
+      - id: schoolheart47510.fileName
+        version: 1
+      - id: schoolheart47510.printTime
+        version: 1
+      - id: schoolheart47510.timeRemaining
         version: 1
     categories:
       - name: Printer
+  - id: extruder
+    label: Extruder
+    capabilities:
+      - id: temperatureMeasurement
+        version: 1
+  - id: bed
+    label: Bed
+    capabilities:
+      - id: temperatureMeasurement
+        version: 1
+  - id: others
+    label: Others
+    capabilities:
+      - id: schoolheart47510.coolingFan
+        version: 1
+      - id: schoolheart47510.bambuLightV2
+        version: 1
+dashboard:
+  states:
+    - capability: patchprepare64330.printerProgress
+      version: 1
+      label: '{{percentComplete.value}} %'
+  actions: []
 preferences:
   - name: printerIp
     title: "IP Address"

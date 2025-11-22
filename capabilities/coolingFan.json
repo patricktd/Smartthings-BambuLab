@@ -1,11 +1,7 @@
 {
-    "id": "patchprepare64330.printerStatus",
-    "version": 1,
-    "status": "proposed",
-    "name": "Printer Status",
-    "ephemeral": false,
+    "name": "Cooling Fan",
     "attributes": {
-        "printStatusMessage": {
+        "coolingFan": {
             "schema": {
                 "type": "object",
                 "properties": {
@@ -21,5 +17,5 @@
             "enumCommands": []
         }
     },
-"commands": {}
+    "commands": {}
 }

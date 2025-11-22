@@ -748,12 +748,8 @@ function client_mt:open_connection()
 
 
 	-- Schedule keep-alive *****
-	
-	self.keepalive_timer = thisDriver:call_on_schedule(self.args.keep_alive, 
-			function()
-				self:send_pingreq()
-			end,
-			'Keep-alive timer')
+	-- REMOVED: thisDriver is not defined and keep-alive is handled by ioloop or manual checks
+	-- self.keepalive_timer = thisDriver:call_on_schedule(...)
 		
 	
 	

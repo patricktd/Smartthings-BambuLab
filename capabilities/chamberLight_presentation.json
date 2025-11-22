@@ -1,0 +1,113 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{switch.value}}",
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "Ligado",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Desligado",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        ],
+        "actions": [
+            {
+                "displayType": "toggleSwitch",
+                "toggleSwitch": {
+                    "command": {
+                        "on": "on",
+                        "off": "off"
+                    },
+                    "state": {
+                        "value": "switch.value",
+                        "on": "on",
+                        "off": "off"
+                    }
+                }
+            }
+        ]
+    },
+    "detailView": [
+        {
+            "label": "Luz da Câmara",
+            "displayType": "switch",
+            "switch": {
+                "command": {
+                    "on": "on",
+                    "off": "off"
+                },
+                "state": {
+                    "value": "switch.value",
+                    "on": "on",
+                    "off": "off"
+                },
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "Ligado",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Desligado",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Luz da Câmara",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "Ligado",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Desligado",
+                            "type": "inactive"
+                        }
+                    ],
+                    "value": "switch.value",
+                    "valueType": "string"
+                }
+            }
+        ],
+        "actions": [
+            {
+                "label": "Luz da Câmara",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "Ligar",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Desligar",
+                            "type": "inactive"
+                        }
+                    ],
+                    "command": "setSwitch"
+                }
+            }
+        ]
+    },
+    "id": "schoolheart47510.chamberLight",
+    "version": 1
+}

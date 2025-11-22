@@ -26,7 +26,12 @@ function luasocket_ssl.connect(conn)
 	-- TLS/SSL initialization
 	wrapped, err = ssl.wrap(conn.sock, conn.secure_params)
 	if not wrapped then
-		conn.sock:shutdown()
+		print("ERROR: ssl.wrap() failed: " .. tostring(err))
+		if conn.sock.shutdown then
+			conn.sock:shutdown()
+		else
+			conn.sock:close()
+		end
 		return false, "ssl.wrap() failed: "..err
 	end
 	ok = wrapped:dohandshake()
