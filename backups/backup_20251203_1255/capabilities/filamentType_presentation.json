@@ -1,0 +1,61 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{value}}"
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "label": "In Use",
+            "displayType": "state",
+            "state": {
+                "label": "{{value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "In Use",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "PLA",
+                            "value": "PLA",
+                            "type": "active"
+                        },
+                        {
+                            "key": "ABS",
+                            "value": "ABS",
+                            "type": "active"
+                        },
+                        {
+                            "key": "PETG",
+                            "value": "PETG",
+                            "type": "active"
+                        },
+                        {
+                            "key": "TPU",
+                            "value": "TPU",
+                            "type": "active"
+                        },
+                        {
+                            "key": "ASA",
+                            "value": "ASA",
+                            "type": "active"
+                        }
+                    ],
+                    "value": "value.value"
+                }
+            }
+        ],
+        "actions": []
+    },
+    "id": "schoolheart47510.filamentType",
+    "version": 1
+}

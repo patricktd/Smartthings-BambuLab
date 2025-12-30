@@ -1,0 +1,80 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "Fans: {{coolingFanSpeed.value}}%"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Cooling Fan",
+            "displayType": "state",
+            "state": {
+                "label": "{{coolingFanSpeed.value}}%",
+                "unit": "coolingFanSpeed.unit"
+            }
+        },
+        {
+            "label": "Aux Fan",
+            "displayType": "state",
+            "state": {
+                "label": "{{auxFanSpeed.value}}%",
+                "unit": "auxFanSpeed.unit"
+            }
+        },
+        {
+            "label": "Chamber Fan",
+            "displayType": "state",
+            "state": {
+                "label": "{{chamberFanSpeed.value}}%",
+                "unit": "chamberFanSpeed.unit"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Cooling Fan Speed",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "coolingFanSpeed.value",
+                    "valueType": "number",
+                    "unit": "coolingFanSpeed.unit",
+                    "range": [
+                        0,
+                        100
+                    ]
+                }
+            },
+            {
+                "label": "Aux Fan Speed",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "auxFanSpeed.value",
+                    "valueType": "number",
+                    "unit": "auxFanSpeed.unit",
+                    "range": [
+                        0,
+                        100
+                    ]
+                }
+            },
+            {
+                "label": "Chamber Fan Speed",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "chamberFanSpeed.value",
+                    "valueType": "number",
+                    "unit": "chamberFanSpeed.unit",
+                    "range": [
+                        0,
+                        100
+                    ]
+                }
+            }
+        ],
+        "actions": []
+    }
+}

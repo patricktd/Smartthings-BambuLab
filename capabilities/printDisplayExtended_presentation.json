@@ -1,0 +1,40 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{printStatus.value}}"
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "label": "Time Left",
+            "displayType": "state",
+            "state": {
+                "label": "{{remainingTime.value}}"
+            }
+        },
+        {
+            "label": "Est. Finish",
+            "displayType": "state",
+            "state": {
+                "label": "{{finishTime.value}}"
+            }
+        },
+        {
+            "label": "Layer",
+            "displayType": "state",
+            "state": {
+                "label": "{{layerInfo.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.printDisplayExtended",
+    "version": 1
+}

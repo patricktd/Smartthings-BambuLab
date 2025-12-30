@@ -1,0 +1,16 @@
+name: 'BambuLab Printer'
+packageKey: 'bambu-printer-v1-1-46'
+version: '2025-12-04T20:40:00.000Z'
+author: 'Patrick TD'
+license: 'Apache-2.0'
+description: 'Driver para adicionar impressoras Bambu Lab manualmente.'
+
+permissions:
+  lan: {}
+  discovery: {}
+
+device-profiles:
+  - id: c4a26d16-8203-4e5e-b803-5ac7983b5bd2
+    path: profiles/BambuPrinterV2.yaml
+  - id: a1mini-profile-id-placeholder
+    path: profiles/BambuPrinterA1.yaml

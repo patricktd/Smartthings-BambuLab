@@ -1,0 +1,53 @@
+{
+    "name": "Chamber Light",
+    "attributes": {
+        "switch": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "enum": [
+                            "on",
+                            "off"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setSwitch": {
+            "name": "setSwitch",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string",
+                        "enum": [
+                            "on",
+                            "off"
+                        ]
+                    }
+                }
+            ],
+            "sensitive": false
+        },
+        "off": {
+            "name": "off",
+            "arguments": [],
+            "sensitive": false
+        },
+        "on": {
+            "name": "on",
+            "arguments": [],
+            "sensitive": false
+        }
+    }
+}

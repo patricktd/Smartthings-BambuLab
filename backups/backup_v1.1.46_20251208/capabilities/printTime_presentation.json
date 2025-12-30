@@ -1,0 +1,17 @@
+{
+    "detailView": [
+        {
+            "label": "Print Time",
+            "displayType": "state",
+            "state": {
+                "label": "{{printTime.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.printTime",
+    "version": 1
+}

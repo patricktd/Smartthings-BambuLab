@@ -6,12 +6,12 @@
                 "alternatives": [
                     {
                         "key": "on",
-                        "value": "Ligado",
+                        "value": "On",
                         "type": "active"
                     },
                     {
                         "key": "off",
-                        "value": "Desligado",
+                        "value": "Off",
                         "type": "inactive"
                     }
                 ]
@@ -36,7 +36,7 @@
     },
     "detailView": [
         {
-            "label": "Luz da Câmara",
+            "label": "Chamber Light",
             "displayType": "switch",
             "switch": {
                 "command": {
@@ -52,12 +52,12 @@
                 "alternatives": [
                     {
                         "key": "on",
-                        "value": "Ligado",
+                        "value": "On",
                         "type": "active"
                     },
                     {
                         "key": "off",
-                        "value": "Desligado",
+                        "value": "Off",
                         "type": "inactive"
                     }
                 ]
@@ -67,18 +67,18 @@
     "automation": {
         "conditions": [
             {
-                "label": "Luz da Câmara",
+                "label": "Chamber Light",
                 "displayType": "list",
                 "list": {
                     "alternatives": [
                         {
                             "key": "on",
-                            "value": "Ligado",
+                            "value": "On",
                             "type": "active"
                         },
                         {
                             "key": "off",
-                            "value": "Desligado",
+                            "value": "Off",
                             "type": "inactive"
                         }
                     ],
@@ -89,18 +89,18 @@
         ],
         "actions": [
             {
-                "label": "Luz da Câmara",
+                "label": "Chamber Light",
                 "displayType": "list",
                 "list": {
                     "alternatives": [
                         {
                             "key": "on",
-                            "value": "Ligar",
+                            "value": "On",
                             "type": "active"
                         },
                         {
                             "key": "off",
-                            "value": "Desligar",
+                            "value": "Off",
                             "type": "inactive"
                         }
                     ],

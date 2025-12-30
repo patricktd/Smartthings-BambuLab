@@ -1,0 +1,26 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{value}}"
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "label": "AMS Info",
+            "displayType": "state",
+            "state": {
+                "label": "{{value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.amsInfo",
+    "version": 1
+}

@@ -1,0 +1,33 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{fanSpeed.value}} %"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Chamber Fan",
+            "displayType": "state",
+            "state": {
+                "label": "{{fanSpeed.value}} %"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Chamber Fan Speed",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "fanSpeed.value"
+                }
+            }
+        ],
+        "actions": []
+    },
+    "id": "schoolheart47510.chamberFan",
+    "version": 1
+}

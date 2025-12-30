@@ -1,0 +1,116 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{printState.value}}",
+                "alternatives": [
+                    {
+                        "key": "printing",
+                        "value": "Printing",
+                        "type": "active"
+                    },
+                    {
+                        "key": "pause",
+                        "value": "Pause",
+                        "type": "active"
+                    },
+                    {
+                        "key": "idle",
+                        "value": "Idle",
+                        "type": "active"
+                    },
+                    {
+                        "key": "error",
+                        "value": "Error",
+                        "type": "active"
+                    },
+                    {
+                        "key": "finish",
+                        "value": "Complete",
+                        "type": "active"
+                    }
+                ]
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Printer Status",
+            "displayType": "state",
+            "state": {
+                "label": "{{printState.value}}",
+                "alternatives": [
+                    {
+                        "key": "printing",
+                        "value": "Printing",
+                        "type": "active"
+                    },
+                    {
+                        "key": "pause",
+                        "value": "Pause",
+                        "type": "active"
+                    },
+                    {
+                        "key": "idle",
+                        "value": "Idle",
+                        "type": "active"
+                    },
+                    {
+                        "key": "error",
+                        "value": "Error",
+                        "type": "active"
+                    },
+                    {
+                        "key": "finish",
+                        "value": "Complete",
+                        "type": "active"
+                    }
+                ]
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Printer Status",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "printing",
+                            "value": "Printing",
+                            "type": "active"
+                        },
+                        {
+                            "key": "pause",
+                            "value": "Pause",
+                            "type": "active"
+                        },
+                        {
+                            "key": "idle",
+                            "value": "Idle",
+                            "type": "active"
+                        },
+                        {
+                            "key": "error",
+                            "value": "Error",
+                            "type": "active"
+                        },
+                        {
+                            "key": "finish",
+                            "value": "Complete",
+                            "type": "active"
+                        }
+                    ],
+                    "value": "printState.value",
+                    "valueType": "string",
+                    "multiSelectable": false
+                }
+            }
+        ],
+        "actions": []
+    },
+    "id": "schoolheart47510.printerStatus",
+    "version": 1
+}

@@ -1,0 +1,97 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "Controls"
+            }
+        ],
+        "actions": [
+            {
+                "displayType": "pushButton",
+                "pushButton": {
+                    "command": "pause"
+                }
+            }
+        ]
+    },
+    "detailView": [
+        {
+            "label": "Control",
+            "displayType": "list",
+            "list": {
+                "command": {
+                    "name": "setControl",
+                    "alternatives": [
+                        {
+                            "key": "resume",
+                            "value": "Resume",
+                            "type": "active"
+                        },
+                        {
+                            "key": "pause",
+                            "value": "Pause",
+                            "type": "active"
+                        },
+                        {
+                            "key": "stop",
+                            "value": "Stop",
+                            "type": "active"
+                        }
+                    ]
+                },
+                "state": {
+                    "value": "state.value",
+                    "valueType": "string",
+                    "alternatives": [
+                        {
+                            "key": "resume",
+                            "value": "Printing",
+                            "type": "active"
+                        },
+                        {
+                            "key": "pause",
+                            "value": "Paused",
+                            "type": "active"
+                        },
+                        {
+                            "key": "stop",
+                            "value": "Idle",
+                            "type": "active"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": [
+            {
+                "label": "Printer Control",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "resume",
+                            "value": "Resume",
+                            "type": "active"
+                        },
+                        {
+                            "key": "pause",
+                            "value": "Pause",
+                            "type": "active"
+                        },
+                        {
+                            "key": "stop",
+                            "value": "Stop",
+                            "type": "active"
+                        }
+                    ],
+                    "command": "setControl"
+                }
+            }
+        ]
+    },
+    "id": "schoolheart47510.printerControl",
+    "version": 1
+}

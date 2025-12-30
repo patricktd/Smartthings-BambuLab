@@ -1,0 +1,49 @@
+{
+    "id": "schoolheart47510.temperatures",
+    "version": 1,
+    "dashboard": {
+        "states": [
+            {
+                "label": "Nozzle: {{extruderTemp.value}}°C"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Nozzle",
+            "displayType": "state",
+            "state": {
+                "label": "{{extruderTemp.value}} °C"
+            }
+        },
+        {
+            "label": "Bed",
+            "displayType": "state",
+            "state": {
+                "label": "{{bedTemp.value}} °C"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Nozzle Temperature",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "extruderTemp.value",
+                    "valueType": "number"
+                }
+            },
+            {
+                "label": "Bed Temperature",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "bedTemp.value",
+                    "valueType": "number"
+                }
+            }
+        ],
+        "actions": []
+    }
+}

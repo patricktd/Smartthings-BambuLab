@@ -1,0 +1,28 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "Nozzle: {{extruderTemp.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Nozzle Temperature",
+            "displayType": "state",
+            "state": {
+                "label": "{{extruderTemp.value}}"
+            }
+        },
+        {
+            "label": "Bed Temperature",
+            "displayType": "state",
+            "state": {
+                "label": "{{bedTemp.value}}"
+            }
+        }
+    ],
+    "id": "schoolheart47510.temperatures",
+    "version": 1
+}

@@ -3,13 +3,13 @@ components:
   - id: main
     label: Printer
     capabilities:
-      - id: patchprepare64330.printerProgress
+      - id: schoolheart47510.printerProgress
         version: 1
       - id: schoolheart47510.printerStatusV2
         version: 1
       - id: schoolheart47510.statusMessage
         version: 1
-      - id: schoolheart47510.fileName
+      - id: schoolheart47510.fansDisplayNum
         version: 1
       - id: schoolheart47510.printTime
         version: 1
@@ -32,11 +32,11 @@ components:
     capabilities:
       - id: schoolheart47510.coolingFan
         version: 1
-      - id: schoolheart47510.bambuLightV2
+      - id: schoolheart47510.bambuChamberLightV2
         version: 1
 dashboard:
   states:
-    - capability: patchprepare64330.printerProgress
+    - capability: schoolheart47510.printerProgress
       version: 1
       label: '{{percentComplete.value}} %'
   actions: []

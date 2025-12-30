@@ -1,0 +1,21 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{formattedStats.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Stats",
+            "displayType": "state",
+            "state": {
+                "label": "{{formattedStats.value}}"
+            }
+        }
+    ],
+    "id": "schoolheart47510.printStats",
+    "version": 1
+}

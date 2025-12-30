@@ -1,0 +1,47 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{slotA.value}}"
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "label": "Slot 1",
+            "displayType": "state",
+            "state": {
+                "label": "{{slotA.value}}"
+            }
+        },
+        {
+            "label": "Slot 2",
+            "displayType": "state",
+            "state": {
+                "label": "{{slotB.value}}"
+            }
+        },
+        {
+            "label": "Slot 3",
+            "displayType": "state",
+            "state": {
+                "label": "{{slotC.value}}"
+            }
+        },
+        {
+            "label": "Slot 4",
+            "displayType": "state",
+            "state": {
+                "label": "{{slotD.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.amsSlots",
+    "version": 1
+}

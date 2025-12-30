@@ -1,0 +1,38 @@
+{
+    "id": "schoolheart47510.bambuTempDisplay",
+    "version": 1,
+    "status": "proposed",
+    "name": "Bambu Temp Display",
+    "attributes": {
+        "formattedTemp": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setFormattedTemp",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setFormattedTemp": {
+            "name": "setFormattedTemp",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "id": "schoolheart47510.printerControl",
+    "name": "Printer Control",
+    "attributes": {
+        "state": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setControl": {
+            "name": "setControl",
+            "arguments": [
+                {
+                    "name": "mode",
+                    "optional": false,
+                    "schema": {
+                        "type": "string",
+                        "enum": [
+                            "resume",
+                            "pause",
+                            "stop"
+                        ]
+                    }
+                }
+            ]
+        },
+        "resume": {
+            "name": "resume",
+            "arguments": [],
+            "sensitive": false
+        },
+        "pause": {
+            "name": "pause",
+            "arguments": [],
+            "sensitive": false
+        },
+        "stop": {
+            "name": "stop",
+            "arguments": [],
+            "sensitive": false
+        }
+    }
+}

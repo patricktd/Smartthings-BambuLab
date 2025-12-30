@@ -1,5 +1,8 @@
 {
-    "name": "Chamber Light",
+    "id": "schoolheart47510.bambuLightV3",
+    "version": 1,
+    "status": "proposed",
+    "name": "Light",
     "attributes": {
         "lightState": {
             "schema": {
@@ -18,6 +21,7 @@
                     "value"
                 ]
             },
+            "setter": "setLight",
             "enumCommands": []
         }
     },
@@ -36,23 +40,19 @@
                         ]
                     }
                 }
-            ],
-            "sensitive": false
+            ]
         },
         "toggle": {
             "name": "toggle",
-            "arguments": [],
-            "sensitive": false
+            "arguments": []
         },
         "off": {
             "name": "off",
-            "arguments": [],
-            "sensitive": false
+            "arguments": []
         },
         "on": {
             "name": "on",
-            "arguments": [],
-            "sensitive": false
+            "arguments": []
         }
     }
 }

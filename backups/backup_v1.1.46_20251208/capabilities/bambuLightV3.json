@@ -1,0 +1,58 @@
+{
+    "id": "schoolheart47510.bambuLightV3",
+    "version": 1,
+    "status": "proposed",
+    "name": "Light",
+    "attributes": {
+        "lightState": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "enum": [
+                            "on",
+                            "off"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setLight",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setLight": {
+            "name": "setLight",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string",
+                        "enum": [
+                            "on",
+                            "off"
+                        ]
+                    }
+                }
+            ]
+        },
+        "toggle": {
+            "name": "toggle",
+            "arguments": []
+        },
+        "off": {
+            "name": "off",
+            "arguments": []
+        },
+        "on": {
+            "name": "on",
+            "arguments": []
+        }
+    }
+}
