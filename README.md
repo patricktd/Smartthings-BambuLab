@@ -59,4 +59,4 @@ This project is licensed under the [Apache 2.0 License](LICENSE).
 
 ## Credits
 
-Developed by **Patrick TD**.
+Developed by **Patrick Teixeira (PATTETECH)**.
