@@ -11,7 +11,6 @@ It uses the local MQTT interface of the printer for fast and private communicati
 *   **Temperature**: Monitor heatbed and nozzle temperatures.
 *   **Fan Control**: View speeds for Cooling, Auxiliary, and Chamber fans.
 *   **AMS Integration**: See which filament slots are active (Generic support).
-    *   Control the Chamber Light.
 * Control the Chamber Light.
 
 *   **Detailed Info**:
