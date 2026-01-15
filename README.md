@@ -11,9 +11,9 @@ It uses the local MQTT interface of the printer for fast and private communicati
 *   **Temperature**: Monitor heatbed and nozzle temperatures.
 *   **Fan Control**: View speeds for Cooling, Auxiliary, and Chamber fans.
 *   **AMS Integration**: See which filament slots are active (Generic support).
-*   **Remote Control**:
-    *   Pause, Resume, and Stop prints.
     *   Control the Chamber Light.
+* Control the Chamber Light.
+
 *   **Detailed Info**:
     *   Current file name.
     *   Layer information (Current / Total).
@@ -24,8 +24,8 @@ It uses the local MQTT interface of the printer for fast and private communicati
 This driver is designed to work with Bambu Lab printers that support local MQTT:
 
 *   **Bambu Lab X1 Series** (X1C, X1)
-*   **Bambu Lab P1 Series** (P1P, P1S)
-*   **Bambu Lab A1 Series** (A1, A1 Mini)
+*   **Bambu Lab P1 Series** (P1P, P1S) - Tested
+*   **Bambu Lab A1 Series** (A1, A1 Mini) - Tested
 
 ## Installation & Setup
 

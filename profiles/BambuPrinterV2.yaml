@@ -32,26 +32,13 @@ components:
 
       - id: schoolheart47510.fansDisplayNum
         version: 1
-      - id: schoolheart47510.printerControl
-        version: 1
-
-  - id: light
-    label: Light
-    capabilities:
-      - id: switch
-        version: 1
 
 dashboard:
   states:
     - capability: schoolheart47510.printerProgress
       version: 1
       label: '{{percentComplete.value}} %'
-  actions:
-    - capability: schoolheart47510.printerControl
-      version: 1
-      displayType: pushButton
-      pushButton:
-        command: pause
+
 preferences:
   - name: printerIp
     title: "IP Address"

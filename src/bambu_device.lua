@@ -896,34 +896,6 @@ function BambuDevice:send_push_all()
     self:send_message(payload)
 end
 
-function BambuDevice:handle_switch(command)
-    local state = command.command
-    local mode = "off"
-    if state == "on" then mode = "on" end
-    
-    log.info("Switch command received: " .. state)
-    
-    local start_mode = mode
-    if self.device.profile.components.light then
-        self.device:emit_component_event(self.device.profile.components.light, capabilities.switch.switch(start_mode))
-        self.last_emitted_light_state = start_mode
-    end
-
-    local payload = {
-        system = {
-            sequence_id = "2003",
-            command = "ledctrl",
-            led_node = "chamber_light",
-            led_mode = mode,
-            led_on_time = 500,
-            led_off_time = 500,
-            loop_times = 0,
-            interval_time = 0
-        }
-    }
-    self:send_message(payload)
-end
-
 function BambuDevice:handle_refresh()
     log.info("Refresh command received")
     
@@ -937,76 +909,14 @@ function BambuDevice:handle_refresh()
             command = "pushall"
         }
     }
-    self:send_message(payload) -- Changed from send_mqtt_command to send_message
+    self:send_message(payload)
 end
 
 function BambuDevice:init()
     -- Register capability handlers
     self.device:set_field("bambu_device", self)
-    
-    -- Standard Switch Handler
-    self.device:register_capability_listener(capabilities.switch, {
-        on = function(device, command)
-            self:handle_switch(command)
-        end,
-        off = function(device, command)
-            self:handle_switch(command)
-        end
-    })
-
-    -- Custom Handlers
-    self.device:register_capability_listener(capabilities["schoolheart47510.printerControl"], {
-        setControl = function(device, command)
-            self:handle_printer_control(command)
-        end
-    })
 end
 
-function BambuDevice:handle_printer_control(command)
-  local cmd = command.command
-  log.info("DEBUG: handle_printer_control called with command: " .. tostring(cmd))
-  
-  -- Commands match MQTT commands directly now: resume, pause, stop
-  local mqtt_cmd = cmd
-  
-  -- Handle setControl command which comes with an argument
-  if cmd == "setControl" then
-      mqtt_cmd = command.args.mode
-  end
-  
-  if mqtt_cmd == "resume" or mqtt_cmd == "pause" or mqtt_cmd == "stop" then
-      -- Use pre-defined commands from config but make sequence_id dynamic
-      local template_payload = nil
-      if mqtt_cmd == "pause" then template_payload = config.commands.PAUSE end
-      if mqtt_cmd == "resume" then template_payload = config.commands.RESUME end
-      if mqtt_cmd == "stop" then template_payload = config.commands.STOP end
-      
-      if template_payload and template_payload.print then
-          -- Deep copy to avoid modifying the global config
-          local payload = {
-              print = {
-                  sequence_id = tostring(os.time()),
-                  command = template_payload.print.command,
-                  param = template_payload.print.param
-              }
-          }
-          
-          log.info("Sending Printer Control: " .. mqtt_cmd .. " (Seq: " .. payload.print.sequence_id .. ")")
-          self:send_message(payload)
-      end
-      
-      -- Update state attribute to show action
-      -- Emit the command itself as the state value to match presentation keys
-      local state_val = mqtt_cmd
-      
-      local cap_control = capabilities["schoolheart47510.printerControl"]
-      if cap_control then
-          self.device:emit_component_event(self.device.profile.components.others, cap_control.state(state_val))
-      else
-          log.warn("Capability schoolheart47510.printerControl not found for command sync")
-      end
-  end
-end
 
 function BambuDevice:handle_aux_fan_speed(speed_percent)
   log.info("Setting Aux Fan Speed: " .. tostring(speed_percent) .. "%")

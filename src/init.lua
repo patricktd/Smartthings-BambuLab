@@ -161,19 +161,7 @@ local function device_doconfigure(driver, device)
   end
 end
 
-local function handle_switch(driver, device, command)
-  local client = active_devices[device.id]
-  if client then
-    client:handle_switch(command)
-  end
-end
 
-local function handle_printer_control(driver, device, command)
-  local client = active_devices[device.id]
-  if client then
-    client:handle_printer_control(command)
-  end
-end
 
 local function handle_refresh(driver, device, command)
   log.info("Executando Refresh manual...")
@@ -216,16 +204,7 @@ end
 
 local bambu_driver = Driver("bambu-lab-driver", {
   capability_handlers = {
-    [capabilities.switch.ID] = {
-      ["on"] = handle_switch,
-      ["off"] = handle_switch
-    },
-    [capabilities["schoolheart47510.printerControl"].ID] = {
-      ["setControl"] = handle_printer_control,
-      ["resume"] = handle_printer_control,
-      ["pause"] = handle_printer_control,
-      ["stop"] = handle_printer_control
-    },
+
     [capabilities.refresh.ID] = {
       ["refresh"] = handle_refresh
     },
