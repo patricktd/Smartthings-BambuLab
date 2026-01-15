@@ -896,6 +896,34 @@ function BambuDevice:send_push_all()
     self:send_message(payload)
 end
 
+function BambuDevice:handle_switch(command)
+    local state = command.command
+    local mode = "off"
+    if state == "on" then mode = "on" end
+    
+    log.info("Switch command received: " .. state)
+    
+    local start_mode = mode
+    if self.device.profile.components.light then
+        self.device:emit_component_event(self.device.profile.components.light, capabilities.switch.switch(start_mode))
+        self.last_emitted_light_state = start_mode
+    end
+
+    local payload = {
+        system = {
+            sequence_id = "2003",
+            command = "ledctrl",
+            led_node = "chamber_light",
+            led_mode = mode,
+            led_on_time = 500,
+            led_off_time = 500,
+            loop_times = 0,
+            interval_time = 0
+        }
+    }
+    self:send_message(payload)
+end
+
 function BambuDevice:handle_refresh()
     log.info("Refresh command received")
     
@@ -915,6 +943,16 @@ end
 function BambuDevice:init()
     -- Register capability handlers
     self.device:set_field("bambu_device", self)
+    
+    -- Standard Switch Handler
+    self.device:register_capability_listener(capabilities.switch, {
+        on = function(device, command)
+            self:handle_switch(command)
+        end,
+        off = function(device, command)
+            self:handle_switch(command)
+        end
+    })
 end
 
 

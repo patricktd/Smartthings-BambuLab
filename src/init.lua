@@ -161,7 +161,12 @@ local function device_doconfigure(driver, device)
   end
 end
 
-
+local function handle_switch(driver, device, command)
+  local client = active_devices[device.id]
+  if client then
+    client:handle_switch(command)
+  end
+end
 
 local function handle_refresh(driver, device, command)
   log.info("Executando Refresh manual...")
@@ -204,6 +209,10 @@ end
 
 local bambu_driver = Driver("bambu-lab-driver", {
   capability_handlers = {
+    [capabilities.switch.ID] = {
+      ["on"] = handle_switch,
+      ["off"] = handle_switch
+    },
 
     [capabilities.refresh.ID] = {
       ["refresh"] = handle_refresh
