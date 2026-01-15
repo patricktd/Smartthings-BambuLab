@@ -70,53 +70,7 @@ local function device_init(driver, device)
   
 
 
-  -- Initialize Extended Display
-  if device.profile.components.main then
-      pcall(function()
-          device:emit_event({
-                 attribute_id = "remainingTime",
-                 capability_id = "schoolheart47510.printDisplayExtended",
-                 component_id = "main",
-                 state = { value = "--" }
-            })
-          device:emit_event({
-                 attribute_id = "finishTime",
-                 capability_id = "schoolheart47510.printDisplayExtended",
-                 component_id = "main",
-                 state = { value = "--" }
-            })
-          device:emit_event({
-                 attribute_id = "printStatus",
-                 capability_id = "schoolheart47510.printDisplayExtended",
-                 component_id = "main",
-                 state = { value = "--" }
-            })
-          device:emit_event({
-                 attribute_id = "layerInfo",
-                 capability_id = "schoolheart47510.printDisplayExtended",
-                 component_id = "main",
-                 state = { value = "--" }
-            })
-      end)
-  end
 
-  -- Initialize AMS Info
-  if device.profile.components.others and capabilities["schoolheart47510.amsSlots"] then
-      local cap = capabilities["schoolheart47510.amsSlots"]
-      device:emit_component_event(device.profile.components.others, cap.slotA({value = "-"}))
-      device:emit_component_event(device.profile.components.others, cap.slotB({value = "-"}))
-      device:emit_component_event(device.profile.components.others, cap.slotC({value = "-"}))
-      device:emit_component_event(device.profile.components.others, cap.slotD({value = "-"}))
-  end
-
-  if device.profile.components.others and capabilities["schoolheart47510.fansDisplayNum"] then
-      local cap = capabilities["schoolheart47510.fansDisplayNum"]
-      pcall(function()
-          device:emit_component_event(device.profile.components.others, cap.coolingFanSpeed({value = 0}))
-          device:emit_component_event(device.profile.components.others, cap.auxFanSpeed({value = 0}))
-          device:emit_component_event(device.profile.components.others, cap.chamberFanSpeed({value = 0}))
-      end)
-  end
   
   -- Initialize Health Check
   if capabilities.healthCheck then
