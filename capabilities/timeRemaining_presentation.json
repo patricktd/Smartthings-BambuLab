@@ -1,0 +1,25 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{timeRemaining.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Time Remaining",
+            "displayType": "state",
+            "state": {
+                "label": "{{timeRemaining.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.timeRemaining",
+    "version": 1
+}

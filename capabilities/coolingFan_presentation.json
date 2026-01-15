@@ -1,0 +1,25 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{coolingFan.value}} %"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Cooling Fan",
+            "displayType": "state",
+            "state": {
+                "label": "{{coolingFan.value}} %"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.coolingFan",
+    "version": 1
+}

@@ -1,0 +1,155 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{display.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Message",
+            "displayType": "state",
+            "state": {
+                "label": "{{display.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Status Message",
+                "displayType": "list",
+                "list": {
+                    "value": "message.value",
+                    "alternatives": [
+                        {
+                            "key": "Auto Bed Leveling",
+                            "value": "Auto Bed Leveling"
+                        },
+                        {
+                            "key": "Heatbed Preheating",
+                            "value": "Heatbed Preheating"
+                        },
+                        {
+                            "key": "Sweeping XY Mech Mode",
+                            "value": "Sweeping XY Mech Mode"
+                        },
+                        {
+                            "key": "Changing Filament",
+                            "value": "Changing Filament"
+                        },
+                        {
+                            "key": "M400 Pause",
+                            "value": "M400 Pause"
+                        },
+                        {
+                            "key": "Heating Hotend",
+                            "value": "Heating Hotend"
+                        },
+                        {
+                            "key": "Calibration",
+                            "value": "Calibration"
+                        },
+                        {
+                            "key": "Homing",
+                            "value": "Homing"
+                        },
+                        {
+                            "key": "Cleaning Nozzle",
+                            "value": "Cleaning Nozzle"
+                        },
+                        {
+                            "key": "Checking Extruder Temperature",
+                            "value": "Checking Extruder Temperature"
+                        },
+                        {
+                            "key": "Checking Bed Height",
+                            "value": "Checking Bed Height"
+                        },
+                        {
+                            "key": "Loading Filament",
+                            "value": "Loading Filament"
+                        },
+                        {
+                            "key": "Unloading Filament",
+                            "value": "Unloading Filament"
+                        },
+                        {
+                            "key": "Micro Lidar Calibration",
+                            "value": "Micro Lidar Calibration"
+                        },
+                        {
+                            "key": "Homing Calibration",
+                            "value": "Homing Calibration"
+                        },
+                        {
+                            "key": "Scanning First Layer",
+                            "value": "Scanning First Layer"
+                        },
+                        {
+                            "key": "Inspecting First Layer",
+                            "value": "Inspecting First Layer"
+                        },
+                        {
+                            "key": "Identifying Filament",
+                            "value": "Identifying Filament"
+                        },
+                        {
+                            "key": "Calibrating Flow Rate",
+                            "value": "Calibrating Flow Rate"
+                        },
+                        {
+                            "key": "Nozzle Wipe",
+                            "value": "Nozzle Wipe"
+                        },
+                        {
+                            "key": "Cooling Down",
+                            "value": "Cooling Down"
+                        },
+                        {
+                            "key": "Idle / Ready",
+                            "value": "Idle / Ready"
+                        },
+                        {
+                            "key": "Printing",
+                            "value": "Printing"
+                        },
+                        {
+                            "key": "Idle",
+                            "value": "Idle"
+                        },
+                        {
+                            "key": "Preparing",
+                            "value": "Preparing"
+                        },
+                        {
+                            "key": "Paused",
+                            "value": "Paused"
+                        },
+                        {
+                            "key": "Finished",
+                            "value": "Finished"
+                        },
+                        {
+                            "key": "Failed",
+                            "value": "Failed"
+                        },
+                        {
+                            "key": "Offline",
+                            "value": "Offline"
+                        },
+                        {
+                            "key": "Error",
+                            "value": "Error"
+                        }
+                    ]
+                }
+            }
+        ],
+        "actions": []
+    },
+    "id": "schoolheart47510.statusMessage",
+    "version": 1
+}

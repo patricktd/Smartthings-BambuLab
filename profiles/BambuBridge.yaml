@@ -1,0 +1,11 @@
+name: BambuBridge
+components:
+  - id: main
+    label: Bambu Lab Bridge
+    capabilities:
+      - id: momentary
+        version: 1
+    categories:
+      - name: Hub
+metadata:
+  deviceType: Hub

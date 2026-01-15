@@ -1,0 +1,38 @@
+{
+    "id": "schoolheart47510.printStats",
+    "version": 1,
+    "status": "proposed",
+    "name": "Print Stats",
+    "attributes": {
+        "formattedStats": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setFormattedStats",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setFormattedStats": {
+            "name": "setFormattedStats",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}

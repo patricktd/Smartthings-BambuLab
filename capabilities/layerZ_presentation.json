@@ -1,0 +1,21 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{value.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Layer (Z)",
+            "displayType": "state",
+            "state": {
+                "label": "{{value.value}}"
+            }
+        }
+    ],
+    "id": "schoolheart47510.layerZ",
+    "version": 1
+}

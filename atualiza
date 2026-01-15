@@ -1,0 +1,10 @@
+echo "*** Compilando driver novo ***"
+smartthings edge:drivers:package .
+
+echo "*** Instalando.. ***"
+smartthings edge:drivers:install  
+
+read -p "*** Pressione qualquer tecla para continuar...  ***"
+
+echo "*** Visualize o log ***"
+smartthings edge:drivers:logcat

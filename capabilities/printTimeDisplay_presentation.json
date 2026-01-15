@@ -1,0 +1,28 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "Remaining: {{remainingTime.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Total Time",
+            "displayType": "state",
+            "state": {
+                "label": "{{totalTime.value}}"
+            }
+        },
+        {
+            "label": "Remaining",
+            "displayType": "state",
+            "state": {
+                "label": "{{remainingTime.value}}"
+            }
+        }
+    ],
+    "id": "schoolheart47510.printTimeDisplay",
+    "version": 1
+}

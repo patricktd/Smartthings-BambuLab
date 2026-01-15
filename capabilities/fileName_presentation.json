@@ -1,0 +1,17 @@
+{
+    "detailView": [
+        {
+            "label": "File Name",
+            "displayType": "state",
+            "state": {
+                "label": "{{fileName.value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.fileName",
+    "version": 1
+}

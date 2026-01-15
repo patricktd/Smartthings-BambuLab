@@ -1,0 +1,26 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{value.value}}"
+            }
+        ],
+        "actions": [],
+        "basicPlus": []
+    },
+    "detailView": [
+        {
+            "label": "In Use",
+            "displayType": "state",
+            "state": {
+                "label": "{{value}}"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [],
+        "actions": []
+    },
+    "id": "schoolheart47510.filamentType",
+    "version": 1
+}

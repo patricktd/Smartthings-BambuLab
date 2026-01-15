@@ -1,0 +1,21 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{formattedTemp.value}}"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Temperatures",
+            "displayType": "state",
+            "state": {
+                "label": "{{formattedTemp.value}}"
+            }
+        }
+    ],
+    "id": "schoolheart47510.bambuTempDisplay",
+    "version": 1
+}

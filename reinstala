@@ -1,0 +1,19 @@
+echo "*** Removendo driver do Hub ***"
+smartthings edge:drivers:prune
+
+echo "*** Excluindo driver antigo ***"
+smartthings edge:channels:unassign
+
+smartthings edge:drivers:delete   
+
+echo "*** Compilando driver novo ***"
+smartthings edge:drivers:package .
+
+echo "*** Instalando.. ***"
+smartthings edge:channels:assign  
+smartthings edge:drivers:install  
+
+read -p "*** Pressione qualquer tecla para continuar...  ***"
+
+echo "*** Visualize o log ***"
+smartthings edge:drivers:logcat

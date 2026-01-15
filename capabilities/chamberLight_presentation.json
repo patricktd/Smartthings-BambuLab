@@ -1,0 +1,113 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{switch.value}}",
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "On",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Off",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        ],
+        "actions": [
+            {
+                "displayType": "toggleSwitch",
+                "toggleSwitch": {
+                    "command": {
+                        "on": "on",
+                        "off": "off"
+                    },
+                    "state": {
+                        "value": "switch.value",
+                        "on": "on",
+                        "off": "off"
+                    }
+                }
+            }
+        ]
+    },
+    "detailView": [
+        {
+            "label": "Chamber Light",
+            "displayType": "switch",
+            "switch": {
+                "command": {
+                    "on": "on",
+                    "off": "off"
+                },
+                "state": {
+                    "value": "switch.value",
+                    "on": "on",
+                    "off": "off"
+                },
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "On",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Off",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Chamber Light",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "On",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Off",
+                            "type": "inactive"
+                        }
+                    ],
+                    "value": "switch.value",
+                    "valueType": "string"
+                }
+            }
+        ],
+        "actions": [
+            {
+                "label": "Chamber Light",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "On",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Off",
+                            "type": "inactive"
+                        }
+                    ],
+                    "command": "setSwitch"
+                }
+            }
+        ]
+    },
+    "id": "schoolheart47510.chamberLight",
+    "version": 1
+}

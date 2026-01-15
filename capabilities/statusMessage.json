@@ -1,0 +1,70 @@
+{
+    "name": "Status Message",
+    "attributes": {
+        "message": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "enum": [
+                            "Auto Bed Leveling",
+                            "Heatbed Preheating",
+                            "Sweeping XY Mech Mode",
+                            "Changing Filament",
+                            "M400 Pause",
+                            "Heating Hotend",
+                            "Calibration",
+                            "Homing",
+                            "Cleaning Nozzle",
+                            "Checking Extruder Temperature",
+                            "Checking Bed Height",
+                            "Loading Filament",
+                            "Unloading Filament",
+                            "Micro Lidar Calibration",
+                            "Homing Calibration",
+                            "Scanning First Layer",
+                            "Inspecting First Layer",
+                            "Identifying Filament",
+                            "Calibrating Flow Rate",
+                            "Nozzle Wipe",
+                            "Cooling Down",
+                            "Idle / Ready",
+                            "Idle",
+                            "Printing",
+                            "Preparing",
+                            "Paused",
+                            "Finished",
+                            "Failed",
+                            "Offline",
+                            "Error",
+                            "Config. Incomplete",
+                            "Connecting..."
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        },
+        "display": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {}
+}

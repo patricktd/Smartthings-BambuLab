@@ -1,0 +1,55 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{fanSpeed.value}} %"
+            }
+        ],
+        "actions": []
+    },
+    "detailView": [
+        {
+            "label": "Aux Fan",
+            "displayType": "slider",
+            "slider": {
+                "range": [
+                    0,
+                    100
+                ],
+                "step": 10,
+                "command": "setFanSpeed",
+                "value": "fanSpeed.value"
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Aux Fan Speed",
+                "displayType": "numberField",
+                "numberField": {
+                    "value": "fanSpeed.value",
+                    "range": [
+                        0,
+                        100
+                    ]
+                }
+            }
+        ],
+        "actions": [
+            {
+                "label": "Set Aux Fan Speed",
+                "displayType": "slider",
+                "slider": {
+                    "range": [
+                        0,
+                        100
+                    ],
+                    "command": "setFanSpeed"
+                }
+            }
+        ]
+    },
+    "id": "schoolheart47510.auxFan",
+    "version": 1
+}

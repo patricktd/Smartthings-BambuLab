@@ -1,0 +1,25 @@
+{
+    "id": "schoolheart47510.amsInfo",
+    "version": 1,
+    "status": "proposed",
+    "name": "AMS Info",
+    "ephemeral": false,
+    "attributes": {
+        "value": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {}
+}

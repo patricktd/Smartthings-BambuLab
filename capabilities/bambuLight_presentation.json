@@ -1,0 +1,107 @@
+{
+    "dashboard": {
+        "states": [
+            {
+                "label": "{{lightState.value}}",
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "On",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Off",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        ],
+        "actions": [
+            {
+                "displayType": "pushButton",
+                "pushButton": {
+                    "command": "toggle"
+                }
+            }
+        ]
+    },
+    "detailView": [
+        {
+            "label": "Chamber Light",
+            "displayType": "switch",
+            "switch": {
+                "command": {
+                    "on": "on",
+                    "off": "off"
+                },
+                "state": {
+                    "value": "lightState.value",
+                    "valueType": "string",
+                    "on": "on",
+                    "off": "off"
+                },
+                "alternatives": [
+                    {
+                        "key": "on",
+                        "value": "On",
+                        "type": "active"
+                    },
+                    {
+                        "key": "off",
+                        "value": "Off",
+                        "type": "inactive"
+                    }
+                ]
+            }
+        }
+    ],
+    "automation": {
+        "conditions": [
+            {
+                "label": "Chamber Light",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "On",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Off",
+                            "type": "inactive"
+                        }
+                    ],
+                    "value": "lightState.value",
+                    "valueType": "string"
+                }
+            }
+        ],
+        "actions": [
+            {
+                "label": "Chamber Light",
+                "displayType": "list",
+                "list": {
+                    "alternatives": [
+                        {
+                            "key": "on",
+                            "value": "On",
+                            "type": "active"
+                        },
+                        {
+                            "key": "off",
+                            "value": "Off",
+                            "type": "inactive"
+                        }
+                    ],
+                    "command": "setLight",
+                    "argumentType": "string"
+                }
+            }
+        ]
+    },
+    "id": "schoolheart47510.bambuLightV2",
+    "version": 1
+}

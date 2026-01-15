@@ -1,0 +1,74 @@
+{
+    "id": "schoolheart47510.temperatures",
+    "version": 1,
+    "status": "proposed",
+    "name": "Temperatures",
+    "attributes": {
+        "bedTemp": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 150
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setBedTemp",
+            "enumCommands": []
+        },
+        "extruderTemp": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 320
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setExtruderTemp",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setBedTemp": {
+            "name": "setBedTemp",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 150
+                    }
+                }
+            ]
+        },
+        "setExtruderTemp": {
+            "name": "setExtruderTemp",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 320
+                    }
+                }
+            ]
+        }
+    }
+}

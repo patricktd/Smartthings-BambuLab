@@ -1,0 +1,22 @@
+{
+    "name": "In Use",
+    "ephemeral": false,
+    "attributes": {
+        "value": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {}
+}

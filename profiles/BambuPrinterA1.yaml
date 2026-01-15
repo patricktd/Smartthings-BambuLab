@@ -1,0 +1,88 @@
+name: BambuPrinterA1
+components:
+  - id: main
+    label: Printer
+    capabilities:
+      - id: schoolheart47510.printerProgress
+        version: 1
+      - id: healthCheck
+        version: 1
+
+      - id: schoolheart47510.temperatures
+        version: 1
+      - id: schoolheart47510.printDisplayExtended
+        version: 1
+      - id: schoolheart47510.printerStatus
+        version: 1
+      - id: schoolheart47510.statusMessage
+        version: 1
+
+    categories:
+      - name: Printer
+
+  - id: others
+    label: Others / AMS
+    capabilities:
+      - id: schoolheart47510.amsSlots
+        version: 1
+      - id: schoolheart47510.fileName
+        version: 1
+
+      - id: schoolheart47510.fansDisplayNum
+        version: 1
+
+      - id: schoolheart47510.printerControl
+        version: 1
+
+  - id: light
+    label: Light
+    capabilities:
+      - id: switch
+        version: 1
+
+dashboard:
+  states:
+    - capability: schoolheart47510.printerProgress
+      version: 1
+      label: '{{percentComplete.value}} %'
+  actions:
+    - capability: schoolheart47510.printerControl
+      version: 1
+      displayType: pushButton
+      pushButton:
+        command: pause
+preferences:
+  - name: printerIp
+    title: "IP Address"
+    description: "IP address of the printer"
+    required: true
+    preferenceType: string
+    definition:
+      stringType: text
+      default: "192.168.1.x"
+  - name: printerPort
+    title: "Port"
+    description: "Port Number MQTT of Printer (Default:8883)."
+    required: true
+    preferenceType: integer
+    definition:
+      default: 8883
+  - name: accessCode
+    title: "Access Code"
+    description: "Found on the printer's network screen."
+    required: true
+    preferenceType: string
+    definition:
+      stringType: text
+      maxLength: 8
+      default: "00000000"
+  - name: serialNumber
+    title: "Serial Number"
+    description: "Found on the printer's screen or in Bambu Studio."
+    required: true
+    preferenceType: string
+    definition:
+      stringType: password
+      maxLength: 15
+      default: "000000000000000"
+

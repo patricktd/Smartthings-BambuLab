@@ -1,0 +1,66 @@
+{
+    "id": "schoolheart47510.printTimeDisplay",
+    "version": 1,
+    "status": "proposed",
+    "name": "Print Time Display",
+    "attributes": {
+        "totalTime": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setTotalTime",
+            "enumCommands": []
+        },
+        "remainingTime": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "setter": "setRemainingTime",
+            "enumCommands": []
+        }
+    },
+    "commands": {
+        "setTotalTime": {
+            "name": "setTotalTime",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "setRemainingTime": {
+            "name": "setRemainingTime",
+            "arguments": [
+                {
+                    "name": "value",
+                    "optional": false,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    }
+}
